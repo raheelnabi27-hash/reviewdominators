@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review Dominators — More Calls, Jobs & 5-Star Reviews for Service Businesses</title>
+  <meta name="description" content="Review Dominators helps home service businesses win more calls, jobs, and 5-star Google reviews with reputation automation, smart websites, SEO, and Google Ads.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient animated gradient blobs (fixed, behind everything) -->
+  <div class="bg-blobs" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <span class="bg-grid"></span>
+  </div>
+
+  <!-- Fixed header -->
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#top">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+          <path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" fill="currentColor" fill-opacity=".9"/>
+          <path d="M12 2V22M3 7.5L21 16.5M21 7.5L3 16.5" stroke="#06060c" stroke-width=".6" stroke-opacity=".35"/>
+        </svg>
+      </span>
+      Review <span class="brand__accent">Dominators</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav">
+      <div class="nav-item nav-item--dropdown">
+        <button class="nav-item__trigger" type="button" aria-expanded="false">
+          Services
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown__item" href="services/reputation-management.html">
+            <span class="nav-dropdown__icon">⭐</span>
+            <span><strong>Reputation Management</strong><small>Automated 5-star review requests</small></span>
+          </a>
+          <a class="nav-dropdown__item" href="services/smart-websites.html">
+            <span class="nav-dropdown__icon">💻</span>
+            <span><strong>Smart Websites</strong><small>High-converting service sites</small></span>
+          </a>
+          <a class="nav-dropdown__item" href="services/google-seo.html">
+            <span class="nav-dropdown__icon">📍</span>
+            <span><strong>Google SEO</strong><small>Rank in the local map pack</small></span>
+          </a>
+          <a class="nav-dropdown__item" href="services/google-ads.html">
+            <span class="nav-dropdown__icon">🎯</span>
+            <span><strong>Google Ads</strong><small>Paid leads on high-intent searches</small></span>
+          </a>
+        </div>
+      </div>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#results">Results</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--primary btn--sm" href="book-call.html">Book a Free Growth Call</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__copy" data-reveal>
+          <span class="badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" fill="currentColor"/></svg>
+            Built for Service Businesses
+          </span>
+
+          <h1 class="hero__title">
+            Get more calls, more jobs, and
+            <span class="accent-text">more 5-star reviews</span>
+            from Google.
+          </h1>
+
+          <p class="hero__sub">
+            The more visible and trusted you are on Google, the more business you get.
+            We help service businesses turn Google into a consistent source of inbound leads.
+          </p>
+
+          <div class="hero__ctas">
+            <a class="btn btn--primary btn--lg" href="book-call.html">Book a Free Growth Call</a>
+          </div>
+
+          <div class="hero__proof">
+            <div class="avatar-stack" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <p>Proven systems used by real service businesses</p>
+          </div>
+        </div>
+
+        <div class="hero__visual" data-reveal>
+          <div class="phone-float">
+          <div class="phone" id="phone-tilt" data-tilt data-tilt-max="10">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="phone__clock">09:41</div>
+              <div class="phone__date">Monday, May 3</div>
+
+              <div class="notif" style="--d:0s">
+                <span class="notif__icon notif__icon--lead">👤</span>
+                <div class="notif__body">
+                  <div class="notif__top"><strong>REVIEW DOMINATORS</strong><time>now</time></div>
+                  <p class="notif__title">New Lead Received</p>
+                  <p class="notif__text">John D. requested a quote.</p>
+                </div>
+              </div>
+
+              <div class="notif" style="--d:.4s">
+                <span class="notif__icon notif__icon--star">★</span>
+                <div class="notif__body">
+                  <div class="notif__top"><strong>REVIEW DOMINATORS</strong><time>2m ago</time></div>
+                  <p class="notif__title">New 5-Star Review</p>
+                  <p class="notif__text">"Best service ever! Highly..."</p>
+                </div>
+              </div>
+
+              <div class="notif" style="--d:.8s">
+                <span class="notif__icon notif__icon--job">📅</span>
+                <div class="notif__body">
+                  <div class="notif__top"><strong>REVIEW DOMINATORS</strong><time>15m ago</time></div>
+                  <p class="notif__title">Job Booked</p>
+                  <p class="notif__text">Appointment set for tomorrow.</p>
+                </div>
+              </div>
+
+              <div class="notif" style="--d:1.2s">
+                <span class="notif__icon notif__icon--msg">💬</span>
+                <div class="notif__body">
+                  <div class="notif__top"><strong>REVIEW DOMINATORS</strong><time>1h ago</time></div>
+                  <p class="notif__title">New Message</p>
+                  <p class="notif__text">"Hey, are you available..."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trades ticker -->
+      <div class="ticker" data-reveal>
+        <p class="ticker__label">Proudly serving local service businesses</p>
+        <div class="ticker__track">
+          <div class="ticker__row" id="ticker-row">
+            <span>Plumbing</span><span>HVAC</span><span>Electrical</span><span>Landscaping</span>
+            <span>Roofing</span><span>Pest Control</span><span>Arborist</span><span>Painting</span>
+            <span>Cleaning</span><span>Garage Doors</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Built for every stage -->
+    <section class="section" id="stages">
+      <div class="section__head" data-reveal>
+        <h2>Built for Every Stage of Your Business</h2>
+        <p>Whether you're just starting out or scaling a multi-truck operation, we have the systems to fuel your growth.</p>
+      </div>
+
+      <div class="grid grid--3" data-reveal>
+        <div class="stage-card" data-tilt data-tilt-max="6">
+          <span class="stage-card__tag">01</span>
+          <h3>Owner Operator</h3>
+          <p>Just getting started or running solo? We help you build trust fast with a clean website and your first consistent 5-star reviews.</p>
+        </div>
+        <div class="stage-card stage-card--active" data-tilt data-tilt-max="6">
+          <span class="stage-card__tag">02</span>
+          <h3>Growing Team</h3>
+          <p>Got a few techs and want more consistent jobs? We install systems that bring in steady calls and reviews every week.</p>
+        </div>
+        <div class="stage-card" data-tilt data-tilt-max="6">
+          <span class="stage-card__tag">03</span>
+          <h3>Scaling Company</h3>
+          <p>Running multiple crews? We help you dominate your local market with stronger rankings, better reputation, and predictable lead flow.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 systems -->
+    <section class="section section--tint" id="services">
+      <div class="section__head" data-reveal>
+        <h2>The 4 Systems Every Modern Service Business Needs</h2>
+        <p>Simple, effective systems designed specifically for home service professionals.</p>
+      </div>
+
+      <div class="grid grid--4" data-reveal>
+        <div class="svc-card" data-tilt data-tilt-max="8">
+          <div class="svc-card__icon">⭐</div>
+          <h3>Reputation Management</h3>
+          <p>Automated system that requests reviews from customers via SMS. Increases 5-star reviews consistently and improves Google rankings.</p>
+          <ul>
+            <li>Consistent flow of 5-star reviews</li>
+            <li>Automated SMS follow-ups</li>
+          </ul>
+          <a class="svc-card__link" href="services/reputation-management.html">Learn more →</a>
+        </div>
+        <div class="svc-card" data-tilt data-tilt-max="8">
+          <div class="svc-card__icon">💻</div>
+          <h3>Smart Websites</h3>
+          <p>Clean, high-converting websites built specifically for service businesses to turn traffic into booked jobs.</p>
+          <ul>
+            <li>Mobile-first, fast-loading design</li>
+            <li>Built to convert visitors into leads</li>
+          </ul>
+          <a class="svc-card__link" href="services/smart-websites.html">Learn more →</a>
+        </div>
+        <div class="svc-card" data-tilt data-tilt-max="8">
+          <div class="svc-card__icon">📍</div>
+          <h3>Google SEO</h3>
+          <p>Be the business people find first when they search for your services online.</p>
+          <ul>
+            <li>Optimize Google Business Profile</li>
+            <li>Improve local map pack rankings</li>
+          </ul>
+          <a class="svc-card__link" href="services/google-seo.html">Learn more →</a>
+        </div>
+        <div class="svc-card" data-tilt data-tilt-max="8">
+          <div class="svc-card__icon">🎯</div>
+          <h3>Google Ads</h3>
+          <p>Show up at the top of Google instantly for high-intent search terms.</p>
+          <ul>
+            <li>High-converting search campaigns</li>
+            <li>Focus on ROI and booked jobs</li>
+          </ul>
+          <a class="svc-card__link" href="services/google-ads.html">Learn more →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two paths -->
+    <section class="section" id="strategy">
+      <div class="section__head" data-reveal>
+        <span class="badge badge--muted">Two Paths. One Goal.</span>
+        <h2>Sustainable Growth for Your Business.</h2>
+        <p>Long-term growth builds a foundation. Short-term growth drives results today.</p>
+      </div>
+
+      <div class="paths" data-reveal>
+        <div class="path-card">
+          <span class="path-card__eyebrow">Long-Term Growth</span>
+          <h3>Build Today. Grow Forever.</h3>
+          <p>Sustainable growth through strategic assets that compound over time.</p>
+          <div class="path-card__rows">
+            <div><strong>Review Automation</strong><span>More 5-star reviews · Stronger reputation · Higher conversion rates</span></div>
+            <div><strong>SEO Work</strong><span>Higher rankings · More organic traffic · Lower cost per lead over time</span></div>
+            <div><strong>Website Optimization</strong><span>Better UX · Higher conversions · Supports all other channels</span></div>
+          </div>
+          <p class="path-card__note">Invest now. Benefit forever.</p>
+        </div>
+
+        <div class="path-vs" aria-hidden="true">VS</div>
+
+        <div class="path-card path-card--dark">
+          <span class="path-card__eyebrow">Short-Term Growth</span>
+          <h3>Results Now.</h3>
+          <p>Immediate visibility and leads through paid advertising.</p>
+          <div class="path-card__rows">
+            <div><strong>Google Ads</strong><span>Leads start coming in quickly · Highly targeted traffic · Pay for every click</span></div>
+          </div>
+          <p class="path-card__note">Immediate results. Stops when you stop paying.</p>
+        </div>
+      </div>
+
+      <div class="compare" data-reveal>
+        <h3 class="compare__title">Side-by-Side Comparison</h3>
+        <table class="compare__table">
+          <thead>
+            <tr><th>Long-Term Growth</th><th>Focus</th><th>Short-Term Growth</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Builds equity &amp; lasting assets</td><td>🎯</td><td>Buys visibility &amp; immediate leads</td></tr>
+            <tr><td>Lower cost per lead over time</td><td>💰</td><td>Higher cost per lead</td></tr>
+            <tr><td>Compounds &amp; grows over time</td><td>📈</td><td>Stops when you stop paying</td></tr>
+            <tr><td>Stronger brand trust &amp; authority</td><td>🛡️</td><td>Less brand equity</td></tr>
+            <tr><td>Sustainable, predictable growth</td><td>🌱</td><td>Not sustainable long-term</td></tr>
+          </tbody>
+        </table>
+        <p class="compare__cta">We help you do both — immediate results plus a long-term growth engine.</p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section section--tint" id="how-it-works">
+      <div class="section__head" data-reveal>
+        <h2>How It Works</h2>
+        <p>A simple, proven process to get your phone ringing.</p>
+      </div>
+
+      <div class="steps" data-reveal>
+        <div class="step">
+          <span class="step__num">1</span>
+          <h3>Growth Call</h3>
+          <p>We hop on a call to understand your business, get to know your needs, and provide a tailored solution.</p>
+        </div>
+        <div class="step">
+          <span class="step__num">2</span>
+          <h3>We Build</h3>
+          <p>Once we partner up, we build and install your custom growth systems, ready to launch within a week.</p>
+        </div>
+        <div class="step">
+          <span class="step__num">3</span>
+          <h3>You Grow</h3>
+          <p>After that first week, your new systems start working immediately to bring in more calls, reviews, and jobs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why us -->
+    <section class="section" id="why-us">
+      <div class="section__head" data-reveal>
+        <h2>Why Review Dominators?</h2>
+        <p>Marketing agencies are notorious for being deceitful, locking businesses into long-term contracts with zero results. We do things differently.</p>
+      </div>
+
+      <div class="grid grid--3" data-reveal>
+        <div class="value-card" data-tilt data-tilt-max="6">
+          <div class="value-card__icon">🤝</div>
+          <h3>Zero Contracts</h3>
+          <p>We don't do contracts. We want you to stay with us because you actually like us and because we're getting you results.</p>
+        </div>
+        <div class="value-card" data-tilt data-tilt-max="6">
+          <div class="value-card__icon">🧭</div>
+          <h3>Ethics &amp; Service First</h3>
+          <p>We pride ourselves on our ethics and our dedication to service. No fluff, no hidden fees, just honest work.</p>
+        </div>
+        <div class="value-card" data-tilt data-tilt-max="6">
+          <div class="value-card__icon">❤️</div>
+          <h3>People Over Profit</h3>
+          <p>Business isn't just about business — it's about people. The people we work with mean a lot to us, and we treat your business like it's our own.</p>
+        </div>
+      </div>
+
+      <blockquote class="founder-quote" data-reveal>
+        <p>"Our goal isn't just to generate leads. It's to build long-term relationships with service professionals who want a marketing partner they can actually trust."</p>
+        <cite>— The Founders, Review Dominators</cite>
+      </blockquote>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section section--tint" id="results">
+      <div class="section__head" data-reveal>
+        <span class="badge badge--muted">Testimonials</span>
+        <h2>What Our Clients Are Saying</h2>
+      </div>
+
+      <div class="grid grid--3" data-reveal>
+        <div class="quote-card" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">14 → 60 reviews in 3 weeks</p>
+          <p class="quote-card__name">Landscaping Co. Owner</p>
+        </div>
+        <div class="quote-card" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">60 new reviews in 3 weeks</p>
+          <p class="quote-card__name">Wellness Studio Owner</p>
+        </div>
+        <div class="quote-card" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">20 → 50 reviews in 1 week</p>
+          <p class="quote-card__name">Junk Removal Owner</p>
+        </div>
+        <div class="quote-card" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">22 → 44 reviews in 1 week</p>
+          <p class="quote-card__name">Holistic Center Owner</p>
+        </div>
+        <div class="quote-card" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">30 → 150 reviews in 2 weeks</p>
+          <p class="quote-card__name">Tree Service Owner</p>
+        </div>
+        <div class="quote-card quote-card--muted" data-tilt data-tilt-max="6">
+          <div class="quote-card__stars">★★★★★</div>
+          <p class="quote-card__stat">Your results here</p>
+          <p class="quote-card__name">Book a free growth call to get started</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta" id="contact">
+      <div class="cta__inner" data-reveal>
+        <h2>Ready to Grow Your Business?</h2>
+        <p>The more visible and trusted you are on Google, the more business you get. Let's make it happen.</p>
+        <a class="btn btn--primary btn--lg" href="book-call.html">Book a Free Growth Call</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer-full">
+    <div class="site-footer-full__inner">
+      <div class="site-footer-full__brand">
+        <a class="brand" href="#top">Review <span class="brand__accent">Dominators</span></a>
+        <p>Helping service businesses grow using simple systems that actually work.</p>
+      </div>
+      <div class="site-footer-full__col">
+        <h4>Services</h4>
+        <a href="services/reputation-management.html">Reputation Management</a>
+        <a href="services/smart-websites.html">Smart Websites</a>
+        <a href="services/google-seo.html">Google SEO</a>
+        <a href="services/google-ads.html">Google Ads</a>
+      </div>
+      <div class="site-footer-full__col">
+        <h4>Company</h4>
+        <a href="#why-us">Why Us</a>
+        <a href="#results">Results</a>
+        <a href="book-call.html">Book a Call</a>
+      </div>
+    </div>
+    <div class="site-footer-full__legal">© <span id="year"></span> Review Dominators. All rights reserved.</div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
