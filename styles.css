@@ -563,6 +563,31 @@ main, .site-header, .site-footer-full{ position: relative; z-index: 1; }
   color: var(--cyan);
   font-weight: 800;
 }
+/* ============ Line icons (replace emoji) ============ */
+.icon{
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.svc-card__icon, .feature-item__icon, .nav-dropdown__icon,
+.calendar-widget__icon, .book-hero__feature-icon, .portfolio-card__thumb{ color: #fff; }
+.svc-card__icon .icon, .feature-item__icon .icon, .calendar-widget__icon .icon{ width: 22px; height: 22px; }
+.nav-dropdown__icon .icon, .book-hero__feature-icon .icon{ width: 18px; height: 18px; }
+.portfolio-card__thumb .icon{ width: 46px; height: 46px; stroke-width: 1.4; }
+.svc-hero__art{ color: var(--cyan); }
+.svc-hero__art .icon{ width: 34%; height: 34%; stroke-width: 1; }
+.value-card__icon{ display: flex; justify-content: center; color: var(--cyan); }
+.value-card__icon .icon{ width: 30px; height: 30px; stroke-width: 1.6; }
+.notif__icon .icon{ width: 16px; height: 16px; }
+.compare__table td .icon{ width: 18px; height: 18px; color: var(--cyan); vertical-align: middle; }
+.calendar-widget__meta span{ display: flex; align-items: center; gap: 10px; }
+.calendar-widget__meta .icon{ width: 16px; height: 16px; color: var(--cyan); }
+
 .svc-card__link{
   display: inline-block;
   margin-top: 16px;
