@@ -50,15 +50,28 @@ const tiltEls = document.querySelectorAll('[data-tilt]');
 if (!reduceMotion && window.matchMedia('(hover: hover)').matches && tiltEls.length) {
   tiltEls.forEach((el) => {
     const max = parseFloat(el.dataset.tiltMax) || 8;
+    let rect = null;
+    let frame = 0;
+    let lastEvent = null;
+
+    el.addEventListener('mouseenter', () => {
+      rect = el.getBoundingClientRect();
+    });
 
     el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width - 0.5;
-      const py = (e.clientY - rect.top) / rect.height - 0.5;
-      el.style.transform = `perspective(1000px) rotateX(${(-py * max * 2).toFixed(2)}deg) rotateY(${(px * max * 2).toFixed(2)}deg) translateZ(4px)`;
+      lastEvent = e;
+      if (frame || !rect) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const px = (lastEvent.clientX - rect.left) / rect.width - 0.5;
+        const py = (lastEvent.clientY - rect.top) / rect.height - 0.5;
+        el.style.transform = `perspective(1000px) rotateX(${(-py * max * 2).toFixed(2)}deg) rotateY(${(px * max * 2).toFixed(2)}deg) translateZ(4px)`;
+      });
     });
 
     el.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
       el.style.transform = '';
     });
   });
@@ -97,6 +110,37 @@ document.querySelectorAll('.faq-item__q').forEach((btn) => {
     answer.style.maxHeight = !isOpen ? `${answer.scrollHeight}px` : null;
   });
 });
+
+// Paste your Cal.com or Calendly booking link here (e.g. 'https://cal.com/yourname/30min').
+// While empty, the pages show the front-end demo calendar below, which sends nothing anywhere.
+const BOOKING_URL = '';
+
+if (BOOKING_URL) {
+  try {
+    const url = new URL(BOOKING_URL);
+    if (url.hostname.endsWith('cal.com')) {
+      url.searchParams.set('theme', 'dark');
+      url.searchParams.set('layout', 'month_view');
+    } else if (url.hostname.endsWith('calendly.com')) {
+      url.searchParams.set('embed_domain', location.hostname || 'localhost');
+      url.searchParams.set('embed_type', 'Inline');
+      url.searchParams.set('background_color', '0b0a1a');
+      url.searchParams.set('text_color', 'f3f2fb');
+      url.searchParams.set('primary_color', '8b5cf6');
+      url.searchParams.set('hide_gdpr_banner', '1');
+    }
+    document.querySelectorAll('.calendar-widget').forEach((widget) => {
+      const frame = document.createElement('iframe');
+      frame.src = url.toString();
+      frame.title = 'Book a call';
+      frame.loading = 'lazy';
+      widget.classList.add('calendar-widget--embed');
+      widget.replaceChildren(frame);
+    });
+  } catch (err) {
+    console.warn('BOOKING_URL is not a valid URL, showing demo calendar instead.', err);
+  }
+}
 
 // Booking calendar widget (front-end only demo — no data is sent anywhere)
 const calDays = document.getElementById('cal-days');
@@ -218,11 +262,19 @@ const hero = document.getElementById('hero');
 const cursorGlow = document.getElementById('cursor-glow');
 
 if (!reduceMotion && hero && cursorGlow && window.matchMedia('(hover: hover)').matches) {
+  let glowFrame = 0;
+  let glowEvent = null;
   hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    cursorGlow.style.left = `${e.clientX - rect.left}px`;
-    cursorGlow.style.top = `${e.clientY - rect.top}px`;
-    cursorGlow.style.opacity = '1';
+    glowEvent = e;
+    if (glowFrame) return;
+    glowFrame = requestAnimationFrame(() => {
+      glowFrame = 0;
+      const rect = hero.getBoundingClientRect();
+      const x = glowEvent.clientX - rect.left - cursorGlow.offsetWidth / 2;
+      const y = glowEvent.clientY - rect.top - cursorGlow.offsetHeight / 2;
+      cursorGlow.style.transform = `translate(${x}px, ${y}px)`;
+      cursorGlow.style.opacity = '1';
+    });
   });
   hero.addEventListener('mouseleave', () => {
     cursorGlow.style.opacity = '0';
