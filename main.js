@@ -396,14 +396,31 @@ if (!reduceMotion && window.matchMedia('(hover: none)').matches && tiltEls.lengt
     el.style.setProperty('--my', `${my.toFixed(1)}%`);
   };
 
+  // page-space centre of each element, measured once (offsetTop ignores transforms), so scrolling never forces layout
+  const mids = new Map();
+  const pageMid = (el) => {
+    let y = 0;
+    for (let n = el; n; n = n.offsetParent) y += n.offsetTop;
+    return y + el.offsetHeight / 2;
+  };
+  const measure = () => tiltEls.forEach((el) => mids.set(el, pageMid(el)));
+  measure();
+  window.addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  let measureTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(measureTimer);
+    measureTimer = setTimeout(measure, 150);
+  });
+
   const render = () => {
     frame = 0;
     const vh = window.innerHeight;
+    const scrollTop = window.scrollY;
     visible.forEach((el) => {
       if (held.has(el)) return;
       const max = parseFloat(el.dataset.tiltMax) || 8;
-      const r = el.getBoundingClientRect();
-      const p = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+      const p = clamp((mids.get(el) - scrollTop - vh / 2) / vh, -1, 1);
       let rx = -p * max * 1.5;
       let ry = Math.sin(p * 2.4) * max * 0.9;
       if (el.id === 'phone-tilt') {
@@ -480,3 +497,65 @@ if (!reduceMotion && window.matchMedia('(hover: none)').matches && tiltEls.lengt
     }
   }
 }
+
+// ---- Smoothness (no visual change) ----
+const rootEl = document.documentElement;
+let qualityPref = null;
+try {
+  const q = new URLSearchParams(location.search).get('quality');
+  if (q === 'high' || q === 'lite') localStorage.setItem('rd-quality', q);
+  qualityPref = localStorage.getItem('rd-quality');
+  if (!qualityPref && sessionStorage.getItem('rd-quality') === 'lite') qualityPref = 'lite';
+} catch (err) { /* storage blocked */ }
+if (qualityPref === 'lite') rootEl.classList.add('lite');
+
+// while scrolling: hold the drifting background still and freeze hover reactions under the cursor
+let scrollIdle = 0;
+let sampleUntil = 0;
+let sampling = false;
+const startSampling = () => {
+  if (sampling || rootEl.classList.contains('lite') || qualityPref === 'high') return;
+  sampling = true;
+  const dts = [];
+  let last = 0;
+  let strikes = 0;
+  const step = (now) => {
+    if (last) {
+      const dt = now - last;
+      if (dt > 0 && dt < 250) dts.push(dt);
+    }
+    last = now;
+    if (dts.length >= 60) {
+      dts.sort((a, b) => a - b);
+      const median = dts[Math.floor(dts.length / 2)];
+      const p90 = dts[Math.floor(dts.length * 0.9)];
+      dts.length = 0;
+      strikes = median > 24 || p90 > 42 ? strikes + 1 : Math.max(0, strikes - 1);
+      if (strikes >= 2) {
+        rootEl.classList.add('lite');
+        try { sessionStorage.setItem('rd-quality', 'lite'); } catch (err) { /* storage blocked */ }
+        sampling = false;
+        return;
+      }
+    }
+    if (now < sampleUntil) requestAnimationFrame(step);
+    else sampling = false;
+  };
+  requestAnimationFrame(step);
+};
+
+window.addEventListener('scroll', () => {
+  if (!rootEl.classList.contains('is-scrolling')) rootEl.classList.add('is-scrolling');
+  clearTimeout(scrollIdle);
+  scrollIdle = setTimeout(() => rootEl.classList.remove('is-scrolling'), 150);
+  sampleUntil = performance.now() + 900;
+  startSampling();
+}, { passive: true });
+
+// also watch the first seconds after load (fonts, hero animation, background drift)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    sampleUntil = performance.now() + 4000;
+    startSampling();
+  }, 1200);
+});
