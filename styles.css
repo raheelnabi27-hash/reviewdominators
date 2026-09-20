@@ -1854,7 +1854,6 @@ body{ background: linear-gradient(180deg, #f8fafc 0%, #e9edf2 100%); background-
   box-shadow: inset 0 1px 1px #fff, 0 20px 40px -24px rgba(30,42,58,.45);
 }
 .nav-dropdown{ background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(244,246,249,.96)); border-color: rgba(16,24,40,.12); box-shadow: inset 0 1px 1px #fff, 0 30px 60px -24px rgba(30,42,58,.5); }
-.site-nav{ background: #fff; }
 :is(.calendar-widget__form input, .calendar-widget__form textarea){ background: rgba(255,255,255,.9); border-color: rgba(16,24,40,.15); }
 :is(.badge, .nav-toggle, .cal-nav, .cal-slot){ box-shadow: inset 0 1px 1px #fff; }
 .btn--primary{
@@ -1880,3 +1879,90 @@ body{ background: linear-gradient(180deg, #f8fafc 0%, #e9edf2 100%); background-
 
 /* touch screens: soft glare while a 3D element is in view */
 [data-tilt].is-3d::after{ opacity: .55; }
+
+/* ============ Liquid glass (light) ============ */
+:root{ --glass-blur: blur(20px) saturate(175%) brightness(1.05); }
+
+/* atmosphere: glossy silver and graphite orbs for the glass to lens */
+body{ background: linear-gradient(180deg, #f6f8fa 0%, #e5eaf0 55%, #d8dee6 100%); background-attachment: fixed; }
+.blob--1{ background: radial-gradient(circle at 32% 28%, #ffffff 0%, #e1e6ed 24%, #a1abb9 56%, transparent 70%); opacity: .95; }
+.blob--2{ background: radial-gradient(circle at 36% 30%, #8b95a3 0%, #3a414c 38%, #12161c 62%, transparent 72%); opacity: .4; }
+.blob--3{ background: radial-gradient(circle at 50% 40%, #ffffff 0%, #ccd3dc 42%, transparent 70%); opacity: .9; }
+.section--tint{ background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 70%); }
+
+/* graphite chrome orbs sitting behind each card group: the glass bends and frosts them */
+.grid, .steps, .pricing, .feature-row, .stat-grid, .portfolio-grid, .paths, .calendar-widget{ position: relative; isolation: isolate; }
+.grid::before, .steps::before, .pricing::before, .feature-row::before, .stat-grid::before, .portfolio-grid::before, .paths::before, .calendar-widget::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 6%;
+  left: -70px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #8a94a2 0%, #333a45 40%, #0d1014 66%, transparent 71%);
+  opacity: .55;
+  pointer-events: none;
+}
+.steps::before, .feature-row::before, .paths::before, .stat-grid::before{ left: auto; right: -60px; top: auto; bottom: 4%; width: 300px; height: 300px; }
+.pricing::before{ left: 34%; top: 30%; width: 300px; height: 300px; }
+.calendar-widget::before{ left: auto; right: -50px; top: -8%; width: 260px; height: 260px; }
+.stat-grid::before{ bottom: -18%; }
+
+/* frosted, lensed glass slabs */
+:is(.stage-card, .svc-card, .path-card, .step, .value-card, .quote-card, .stat-card, .feature-item, .price-card, .faq-item, .portfolio-card, .calendar-widget__panel){
+  background:
+    radial-gradient(140% 100% at 0% 0%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 46%),
+    radial-gradient(120% 100% at 100% 100%, rgba(255,255,255,.4), transparent 60%),
+    linear-gradient(150deg, rgba(255,255,255,.6), rgba(255,255,255,.26));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255,255,255,.75);
+  box-shadow:
+    inset 0 2px 1px #fff,
+    inset 0 -2px 4px rgba(16,24,40,.1),
+    inset 1.5px 0 1px rgba(255,255,255,.75),
+    inset -1.5px 0 1px rgba(170,190,215,.4),
+    inset 0 0 34px rgba(255,255,255,.55),
+    0 34px 60px -34px rgba(16,24,40,.5),
+    0 4px 10px rgba(16,24,40,.06);
+}
+:is(.stage-card, .svc-card, .path-card, .step, .value-card, .quote-card, .stat-card, .feature-item, .price-card, .faq-item, .portfolio-card, .calendar-widget__panel)::before{
+  background: linear-gradient(135deg, #ffffff, rgba(255,255,255,.2) 34%, rgba(16,24,40,0) 60%, rgba(16,24,40,.24) 100%);
+}
+:is(.stage-card--active, .quote-card--muted, .price-card--popular){
+  background:
+    radial-gradient(140% 100% at 0% 0%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 46%),
+    linear-gradient(150deg, rgba(255,255,255,.72), rgba(196,205,218,.5));
+  border-color: rgba(255,255,255,.9);
+}
+.compare__table{ background: linear-gradient(150deg, rgba(255,255,255,.66), rgba(255,255,255,.34)); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border-color: rgba(255,255,255,.75); }
+.badge, .nav-toggle, .cal-nav, .cal-slot{ background: linear-gradient(150deg, rgba(255,255,255,.75), rgba(255,255,255,.4)); -webkit-backdrop-filter: blur(12px) saturate(160%); backdrop-filter: blur(12px) saturate(160%); border-color: rgba(255,255,255,.8); box-shadow: inset 0 1px 1px #fff, 0 6px 14px -8px rgba(16,24,40,.35); }
+
+/* floating glass header + menus let the page show through */
+.site-header{
+  background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.36));
+  border: 1px solid rgba(255,255,255,.8);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  box-shadow: inset 0 2px 1px #fff, inset 0 -2px 4px rgba(16,24,40,.08), 0 24px 44px -24px rgba(16,24,40,.5);
+}
+.nav-dropdown{
+  background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(246,248,251,.74));
+  border-color: rgba(255,255,255,.85);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: inset 0 2px 1px #fff, 0 30px 60px -24px rgba(16,24,40,.55);
+}
+
+@media (max-width: 720px){
+  :root{ --glass-blur: blur(12px) saturate(160%) brightness(1.04); }
+  .site-header{ -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); }
+  .grid::before, .steps::before, .pricing::before, .feature-row::before, .stat-grid::before, .portfolio-grid::before, .paths::before, .calendar-widget::before{ width: 220px; height: 220px; opacity: .5; }
+  .site-nav{ background: rgba(255,255,255,.94); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  :is(.stage-card, .svc-card, .path-card, .step, .value-card, .quote-card, .stat-card, .feature-item, .price-card, .faq-item, .portfolio-card, .calendar-widget__panel){ background: linear-gradient(150deg, rgba(255,255,255,.9), rgba(255,255,255,.7)); }
+  .site-header{ background: rgba(255,255,255,.92); }
+}
