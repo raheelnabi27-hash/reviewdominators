@@ -92,7 +92,8 @@ function buildSparkles(count) {
 export function createScene(canvas, { variant = 'star' } = {}) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 900 ? 1.4 : 1.75));
+  const MAX_DPR = 1.25; // the star is smooth, low-frequency shading: extra pixels only cost frame time
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.setClearColor(0x000000, 0);
@@ -145,7 +146,7 @@ export function createScene(canvas, { variant = 'star' } = {}) {
   let orb = null;
 
   if (variant === 'orb') {
-    const geo = new THREE.IcosahedronGeometry(1.35, 24);
+    const geo = new THREE.IcosahedronGeometry(1.35, 12);
     orb = { geo, base: geo.attributes.position.array.slice() };
     const body = new THREE.Mesh(geo, bodyMat);
     heroInner.add(body);
@@ -155,6 +156,7 @@ export function createScene(canvas, { variant = 'star' } = {}) {
     const wire = new THREE.Mesh(starGeometry(5, 3), wireMat); wire.scale.setScalar(1.006);
     const shell = new THREE.Mesh(starGeometry(10, 6), shellMat); shell.scale.setScalar(1.13);
     [body, wire, shell].forEach((m) => { m.position.y = 0.04; heroInner.add(m); });
+    orbit.wires.push(wire); orbit.shells.push(shell);
   }
 
   /* orbit rings + beads */
@@ -239,9 +241,30 @@ export function createScene(canvas, { variant = 'star' } = {}) {
   let running = true, raf = 0;
   document.addEventListener('visibilitychange', () => { running = !document.hidden; if (running) { clock.getDelta(); loop(); } });
 
+  /* pacing: full rate only while the object is the star of the show; a faint background object needs far fewer frames.
+     A device that can't keep up steps down on its own: 1 = DPR 1 + 30fps cap + no bubbles, 0 = also no sparkles. */
+  let level = 2, lastRender = 0, frameN = 0, sceneAlpha = 1, slowRun = 0, emaDt = 16;
+  const readAlpha = () => { const v = parseFloat(canvas.style.getPropertyValue('--scene-alpha')); return Number.isFinite(v) ? v : 1; };
+  function degrade(to) {
+    if (to >= level) return;
+    level = to;
+    if (level <= 1) { renderer.setPixelRatio(1); resize(); bubbles.forEach((b) => { b.visible = false; }); }
+    if (level <= 0) sparkles.visible = false;
+  }
+
   function loop() {
     if (!running) return;
     raf = requestAnimationFrame(loop);
+    const now = performance.now();
+    if ((frameN++ & 15) === 0) sceneAlpha = readAlpha();
+    const interval = sceneAlpha >= 0.5 ? (level >= 2 ? 0 : 33) : sceneAlpha >= 0.1 ? 42 : 100;
+    if (now - lastRender < interval - 2) return;
+    if (lastRender && level >= 1) {                                   // measure only real render-to-render time
+      const real = now - lastRender;
+      emaDt += (real - emaDt) * 0.08;
+      if (interval === 0) { slowRun = emaDt > 26 ? slowRun + 1 : Math.max(0, slowRun - 2); if (slowRun > 90) { slowRun = 0; degrade(level - 1); } }
+    }
+    lastRender = now;
     const dt = Math.min(clock.getDelta(), 0.05);
     const t = clock.elapsedTime;
     const k = 1 - Math.exp(-dt * (reduce ? 14 : 3.4));
@@ -264,6 +287,8 @@ export function createScene(canvas, { variant = 'star' } = {}) {
     hero.scale.setScalar(sc);
     heroInner.rotation.set(state.rx + pointer.sy * 0.22 + scrollVelSm * 0.012, state.ry + (reduce ? 0 : t * 0.22) + pointer.sx * 0.5, state.rz);
 
+    orbit.wires.forEach((m) => { m.visible = state.wire > 0.01; });
+    orbit.shells.forEach((m) => { m.visible = state.shell > 0.01; });
     wireMat.opacity = state.wire * 0.95;
     shellMat.opacity = state.shell * (c.light ? 0.4 : 0.3);
     shine.intensity = state.shine * 60;
@@ -293,7 +318,7 @@ export function createScene(canvas, { variant = 'star' } = {}) {
         p.setXYZ(i, x * d, y * d, z * d);
       }
       p.needsUpdate = true;
-      orb.geo.computeVertexNormals();
+      if (frameN & 1) orb.geo.computeVertexNormals();
     }
 
     renderer.render(scene, camera);
@@ -305,7 +330,7 @@ export function createScene(canvas, { variant = 'star' } = {}) {
     get target() { return target; },
     setTheme: applyTheme,
     kick(v) { scrollVel = v; },
-    lite() { renderer.setPixelRatio(1); resize(); bubbles.forEach((b) => { b.visible = false; }); },
+    lite() { degrade(1); },
     canvasAlpha,
     dispose() { cancelAnimationFrame(raf); running = false; renderer.dispose(); },
   };

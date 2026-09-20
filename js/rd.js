@@ -178,25 +178,46 @@ $$('[data-heatmap]').forEach((map) => {
   heatIO.observe(map);
 });
 
-/* ---------- Phone: 3D on touch screens (hover devices use the pointer tilt from site.js) ---------- */
+/* ---------- Phone: 3D on touch screens (hover devices use the pointer tilt from site.js) ----------
+   The phone always sways gently, leans with scroll position, follows a finger dragged across it, and (Android) follows the gyroscope. */
 const phone = $('.demo__phone .phone');
-if (phone && !fine && !reduce) {
-  let raf = 0, gyro = null;
-  const draw = () => {
-    raf = 0;
-    const r = phone.getBoundingClientRect();
-    const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - innerHeight / 2) / innerHeight));
-    const ry = gyro ? gyro.ry : -p * 18, rx = gyro ? gyro.rx : 5 + p * 4;
-    phone.style.rotate = `1 0 0 ${rx.toFixed(2)}deg`;
-    phone.style.transform = `rotateY(${ry.toFixed(2)}deg)`;
+if (phone && !fine) {
+  phone.parentElement.style.perspective = '1100px';   // the tilt needs a perspective on the direct parent to read as 3D
+  phone.style.touchAction = 'pan-y';                   // vertical swipes still scroll the page
+  let visible = false, raf = 0, scrollP = 0, sy = 0, sx = 0;
+  let cx = 0, cy = 0, dragY = 0, dragX = 0, gyro = null, pressed = false, x0 = 0, y0 = 0;
+  const clamp = (v, m) => Math.max(-m, Math.min(m, v));
+
+  const readScroll = () => { const r = phone.getBoundingClientRect(); scrollP = clamp((r.top + r.height / 2 - innerHeight / 2) / innerHeight, 1); };
+  let scrollQueued = false;
+  addEventListener('scroll', () => { if (visible && !scrollQueued) { scrollQueued = true; requestAnimationFrame(() => { scrollQueued = false; readScroll(); }); } }, { passive: true });
+
+  const frame = (now) => {
+    raf = visible ? requestAnimationFrame(frame) : 0;
+    const t = now / 1000;
+    const idleY = reduce ? 0 : Math.sin(t * 0.9) * 9, idleX = reduce ? 0 : Math.cos(t * 0.7) * 3;
+    const goalY = idleY - scrollP * 24 + dragY + (gyro ? gyro.y : 0);
+    const goalX = 5 + idleX + scrollP * 6 + dragX + (gyro ? gyro.x : 0);
+    cy += (goalY - cy) * 0.12; cx += (goalX - cx) * 0.12;
+    phone.style.transform = `rotateX(${cx.toFixed(2)}deg) rotateY(${cy.toFixed(2)}deg)`;
+    if (!pressed) { dragY *= 0.9; dragX *= 0.9; }
   };
-  const queue = () => { if (!raf) raf = requestAnimationFrame(draw); };
-  let visible = false;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) queue(); }).observe(phone);
-  addEventListener('scroll', () => { if (visible) queue(); }, { passive: true });
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible) { readScroll(); if (!raf) raf = requestAnimationFrame(frame); }
+  }).observe(phone);
+
+  phone.addEventListener('pointerdown', (e) => { pressed = true; x0 = e.clientX; y0 = e.clientY; phone.setPointerCapture?.(e.pointerId); });
+  phone.addEventListener('pointermove', (e) => {
+    if (!pressed) return;
+    dragY = clamp((e.clientX - x0) / phone.offsetWidth * 60, 32);
+    dragX = clamp(-(e.clientY - y0) / phone.offsetHeight * 30, 14);
+  });
+  const release = () => { pressed = false; };
+  phone.addEventListener('pointerup', release); phone.addEventListener('pointercancel', release);
+
   addEventListener('deviceorientation', (e) => {
-    if (e.gamma == null || !visible) return;
-    gyro = { ry: Math.max(-1, Math.min(1, e.gamma / 35)) * 16, rx: 5 - Math.max(-1, Math.min(1, (e.beta - 50) / 40)) * 7 };
-    queue();
+    if (e.gamma == null || e.beta == null) return;
+    gyro = { y: clamp(e.gamma / 35, 1) * 14, x: -clamp((e.beta - 50) / 40, 1) * 7 };
   }, { passive: true });
 }

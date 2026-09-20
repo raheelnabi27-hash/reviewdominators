@@ -8,7 +8,6 @@ const page = document.body.dataset.page || 'home';
 const BASE = document.body.dataset.base || '';   // '../' on pages inside /services
 
 root.classList.add('ready');
-if (window.chrome && !reduce) root.classList.add('liquid');
 
 /* ---------- Icons (24px stroke set; use <i data-icon="name">) ---------- */
 export const ICONS = {
@@ -34,6 +33,7 @@ export const ICONS = {
   compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2z"/>',
   chevD: '<path d="m6 9 6 6 6-6"/>',
   video: '<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10.5 5-3v9l-5-3"/>',
+  download: '<path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>',
   moon: '<path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8z"/>',
   system: '<rect x="3" y="4.5" width="18" height="12.5" rx="2.5"/><path d="M8.5 21h7M12 17v4"/>',
@@ -132,6 +132,7 @@ function buildShell() {
             <li><a href="${HOME}#why">Why us</a></li>
             <li><a href="${HOME}#results">Results</a></li>
             <li><a href="${BOOK}">Book a call</a></li>
+            <li><a href="${BASE}downloads/the-5-star-playbook.pdf" download="The-5-Star-Playbook.pdf">Free playbook (PDF)</a></li>
           </ul>
         </div>
       </div>
@@ -303,20 +304,30 @@ function initReveals() {
 
 /* ---------- Pointer effects ---------- */
 function initPointer() {
+  let sheenEv = null, sheenRaf = 0;
   document.addEventListener('pointermove', (e) => {
-    const g = e.target.closest?.('.glass');
-    if (!g) return;
-    const r = g.getBoundingClientRect();
-    g.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    g.style.setProperty('--my', `${e.clientY - r.top}px`);
+    sheenEv = e;
+    if (sheenRaf) return;
+    sheenRaf = requestAnimationFrame(() => {
+      sheenRaf = 0;
+      const g = sheenEv.target.closest?.('.glass');
+      if (!g) return;
+      const r = g.getBoundingClientRect();
+      g.style.setProperty('--mx', `${sheenEv.clientX - r.left}px`);
+      g.style.setProperty('--my', `${sheenEv.clientY - r.top}px`);
+    });
   }, { passive: true });
   if (!fine || reduce) return;
 
   // cursor spotlight
-  const glow = $('#cursor-glow'); let gx = innerWidth / 2, gy = innerHeight / 2, tx = gx, ty = gy;
-  addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; glow.style.opacity = '1'; }, { passive: true });
+  const glow = $('#cursor-glow'); let gx = innerWidth / 2, gy = innerHeight / 2, tx = gx, ty = gy, glowRaf = 0;
+  const glowLoop = () => {
+    gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12;
+    glow.style.transform = `translate(${gx}px, ${gy}px)`;
+    glowRaf = Math.abs(tx - gx) + Math.abs(ty - gy) > 0.5 ? requestAnimationFrame(glowLoop) : 0;
+  };
+  addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; glow.style.opacity = '1'; if (!glowRaf) glowRaf = requestAnimationFrame(glowLoop); }, { passive: true });
   document.addEventListener('pointerleave', () => { glow.style.opacity = '0'; });
-  (function loop() { gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12; glow.style.transform = `translate(${gx}px, ${gy}px)`; requestAnimationFrame(loop); })();
 
   // 3D tilt (uses the `rotate` property so it never fights reveal transforms)
   const tilts = new Map();
@@ -398,11 +409,26 @@ function initQuality() {
       dts.sort((a, b) => a - b);
       const med = dts[30], p90 = dts[54];
       if (med > 24 || p90 > 42) strikes++; else strikes = 0;
-      if (strikes >= 2) goLite(); else setTimeout(sample, 2500);
+      if (strikes >= 2) goLite(); else setTimeout(sample, 2000);
     };
     requestAnimationFrame(step);
   };
-  addEventListener('load', () => setTimeout(sample, 4500), { once: true });
+  addEventListener('load', () => setTimeout(sample, 3000), { once: true });
+}
+
+/* ?perf=1 shows a live frames-per-second meter (handy for checking a device) */
+function initPerfMeter() {
+  if (!new URLSearchParams(location.search).has('perf')) return;
+  const el = document.createElement('div');
+  el.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:4px 8px;border-radius:8px;font:600 12px/1.3 monospace;color:#fff;background:rgba(0,0,0,.72);pointer-events:none';
+  document.body.appendChild(el);
+  let n = 0, t0 = performance.now();
+  const tick = (now) => {
+    n++;
+    if (now - t0 >= 1000) { el.textContent = `${n} fps${root.classList.contains('lite') ? ' · lite' : ''}`; n = 0; t0 = now; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 
 /* ---------- Boot ---------- */
@@ -417,6 +443,7 @@ initReveals();
 initPointer();
 initScene();
 initQuality();
+initPerfMeter();
 
 // splash screen (home only): counts up, then the curtain opens on the hero
 const loader = $('#loader');
