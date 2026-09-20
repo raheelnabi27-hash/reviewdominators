@@ -66,6 +66,8 @@ if (!reduceMotion && window.matchMedia('(hover: hover)').matches && tiltEls.leng
         const px = (lastEvent.clientX - rect.left) / rect.width - 0.5;
         const py = (lastEvent.clientY - rect.top) / rect.height - 0.5;
         el.style.transform = `perspective(1000px) rotateX(${(-py * max * 2).toFixed(2)}deg) rotateY(${(px * max * 2).toFixed(2)}deg) translateZ(4px)`;
+        el.style.setProperty('--mx', `${((px + 0.5) * 100).toFixed(1)}%`);
+        el.style.setProperty('--my', `${((py + 0.5) * 100).toFixed(1)}%`);
       });
     });
 
@@ -257,26 +259,42 @@ if (calDays) {
   renderCalendar();
 }
 
-// Cursor-follow glow in the hero
-const hero = document.getElementById('hero');
-const cursorGlow = document.getElementById('cursor-glow');
+if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+  // Soft spotlight that follows the pointer across the whole site
+  const blobs = document.querySelector('.bg-blobs');
+  if (blobs) {
+    const spot = document.createElement('span');
+    spot.className = 'cursor-spot';
+    blobs.appendChild(spot);
 
-if (!reduceMotion && hero && cursorGlow && window.matchMedia('(hover: hover)').matches) {
-  let glowFrame = 0;
-  let glowEvent = null;
-  hero.addEventListener('mousemove', (e) => {
-    glowEvent = e;
-    if (glowFrame) return;
-    glowFrame = requestAnimationFrame(() => {
-      glowFrame = 0;
-      const rect = hero.getBoundingClientRect();
-      const x = glowEvent.clientX - rect.left - cursorGlow.offsetWidth / 2;
-      const y = glowEvent.clientY - rect.top - cursorGlow.offsetHeight / 2;
-      cursorGlow.style.transform = `translate(${x}px, ${y}px)`;
-      cursorGlow.style.opacity = '1';
+    let spotFrame = 0;
+    let spotEvent = null;
+    document.addEventListener('mousemove', (e) => {
+      spotEvent = e;
+      if (spotFrame) return;
+      spotFrame = requestAnimationFrame(() => {
+        spotFrame = 0;
+        spot.style.transform = `translate(${spotEvent.clientX}px, ${spotEvent.clientY}px)`;
+        spot.classList.add('is-active');
+      });
     });
-  });
-  hero.addEventListener('mouseleave', () => {
-    cursorGlow.style.opacity = '0';
+    document.documentElement.addEventListener('mouseleave', () => spot.classList.remove('is-active'));
+  }
+
+  // Primary buttons drift toward the pointer
+  document.querySelectorAll('.btn--primary').forEach((btn) => {
+    let rect = null;
+    btn.addEventListener('mouseenter', () => {
+      rect = btn.getBoundingClientRect();
+    });
+    btn.addEventListener('mousemove', (e) => {
+      if (!rect) return;
+      const x = (e.clientX - rect.left - rect.width / 2) * 0.22;
+      const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+      btn.style.transform = `translate(${x.toFixed(1)}px, ${(y - 2).toFixed(1)}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
   });
 }
