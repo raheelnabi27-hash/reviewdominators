@@ -2,88 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#eef1f5">
-  <meta name="color-scheme" content="light">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Reputation Management — Review Dominators</title>
   <meta name="description" content="Automated Google review requests that turn happy customers into a steady stream of 5-star reviews. Plans starting at $149/mo.">
+  <meta name="theme-color" content="#f3f7fc">
+  <script>document.documentElement.classList.add('js-anim')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body data-page="rep" data-base="../" data-variant="star">
 
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob blob--1"></span>
-    <span class="blob blob--2"></span>
-    <span class="blob blob--3"></span>
-    <span class="bg-grid"></span>
-  </div>
+  <div class="bg" aria-hidden="true"><i class="blob blob--1"></i><i class="blob blob--2"></i><i class="blob blob--3"></i><i class="bg__grid"></i><i class="bg__grain"></i></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scene-fallback" aria-hidden="true"></div>
 
-  <header class="site-header" id="site-header">
-    <a class="brand" href="../index.html">
-      <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-h" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span>
-    </a>
-
-    <nav class="site-nav" id="site-nav">
-      <div class="nav-item nav-item--dropdown">
-        <button class="nav-item__trigger" type="button" aria-expanded="false">
-          Services
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="nav-dropdown">
-          <a class="nav-dropdown__item" href="reputation-management.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#star"/></svg></span>
-            <span><strong>Reputation Management</strong><small>Automated 5-star review requests</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="smart-websites.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#monitor"/></svg></span>
-            <span><strong>Smart Websites</strong><small>High-converting service sites</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="google-seo.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#map-pin"/></svg></span>
-            <span><strong>Google SEO</strong><small>Rank in the local map pack</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="google-ads.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#target"/></svg></span>
-            <span><strong>Google Ads</strong><small>Paid leads on high-intent searches</small></span>
-          </a>
-        </div>
-      </div>
-      <a href="../index.html#how-it-works">How It Works</a>
-      <a href="../index.html#why-us">Why Us</a>
-      <a href="../index.html#results">Results</a>
-      <a class="btn btn--primary nav-cta" href="../book-call.html">Book a Free Growth Call</a>
-    </nav>
-
-    <div class="header__actions">
-      <a class="btn btn--primary btn--sm" href="../book-call.html">Book a Free Growth Call</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <main>
+  <main id="top">
 
     <!-- Service hero -->
-    <section class="svc-hero">
-      <div class="hero__glow" aria-hidden="true"></div>
+    <section class="svc-hero" data-scene='{"x":0.06,"y":-0.3,"s":0.75,"ry":0.4,"a":0.32}'>
       <div class="svc-hero__inner">
-        <div data-reveal>
+        <div class="svc-hero__copy" data-reveal>
           <span class="badge">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" fill="currentColor"/></svg>
             Reputation Management
           </span>
-          <h1>Turn happy customers into a steady stream of <span class="accent-text">5-star reviews</span>.</h1>
+          <h1>Turn happy customers into a steady stream of <span class="accent-text">5&#8209;star reviews</span>.</h1>
           <p>Effortlessly grow your online reputation with automated Google review requests designed to bring in more customers, build trust, and drive business.</p>
           <div class="svc-hero__ctas">
             <a class="btn btn--primary btn--lg" href="#calendar">Book a Call</a>
           </div>
         </div>
-        <div class="mock mock--rep" data-tilt data-tilt-max="5" data-reveal>
+        <div class="mock mock--rep glass tilt" data-reveal>
           <div class="mock__search"><svg class="icon" aria-hidden="true"><use href="../icons.svg#search"/></svg><span>plumber near me</span></div>
           <div class="mock__title"><span>Local map results</span><span class="mock__chip mock__chip--good mock__late"><svg class="icon" aria-hidden="true"><use href="../icons.svg#arrow-up"/></svg>Up 3 spots</span></div>
           <div class="mock__list">
@@ -108,25 +60,25 @@
     </section>
 
     <!-- Stats -->
-    <section class="section">
+    <section class="section" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">Why Google Reviews Matter</span>
         <h2>The numbers speak for themselves.</h2>
       </div>
       <div class="stat-grid" data-reveal>
-        <div class="stat-card">
+        <div class="stat-card glass">
           <div class="stat-card__num">92%</div>
           <p>Of consumers read online reviews before choosing a local business.</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card glass">
           <div class="stat-card__num">72%</div>
           <p>Of customers won't take action until they read a positive review.</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card glass">
           <div class="stat-card__num">54%</div>
           <p>More revenue is earned by businesses with 40+ reviews than competitors.</p>
         </div>
-        <div class="stat-card">
+        <div class="stat-card glass">
           <div class="stat-card__num">84%</div>
           <p>Of people trust online reviews as much as a personal recommendation.</p>
         </div>
@@ -134,19 +86,19 @@
     </section>
 
     <!-- 3 benefit features -->
-    <section class="section section--tint">
+    <section class="section section--tint" data-scene='{"x":-0.85,"y":0.1,"s":0.7,"ry":0.4,"a":0.12}'>
       <div class="feature-row" data-reveal>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#eye"/></svg></div>
           <h3>Increased Visibility</h3>
           <p>Our automated Google review tools ensure you stand out from the competition by turning happy customers into loyal brand advocates.</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#shield-check"/></svg></div>
           <h3>Enhanced Trust</h3>
           <p>Build credibility with a steady flow of authentic reviews. Let your reviews do the selling for you.</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#clock"/></svg></div>
           <h3>Save Hours</h3>
           <p>Save time with automation while focusing on what you do best. We request, respond, and repurpose your reviews for you.</p>
@@ -155,24 +107,24 @@
     </section>
 
     <!-- 3 steps -->
-    <section class="section">
+    <section class="section" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">Three Steps</span>
         <h2>Get Started in Three Steps</h2>
         <p>Our simple process takes the hassle out of collecting Google reviews.</p>
       </div>
       <div class="steps" data-reveal>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">1</span>
           <h3>10-Minute Growth Call</h3>
           <p>Hop on a quick 10 to 20-minute video call so we can understand your business and tailor the review system to your needs.</p>
         </div>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">2</span>
           <h3>System Setup &amp; Approval</h3>
           <p>We set up your entire system. It typically takes 3 to 5 days to get your dedicated phone number approved for text messaging.</p>
         </div>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">3</span>
           <h3>Launch &amp; Get Reviews</h3>
           <p>Once your number is approved, we launch. You'll start seeing new 5-star Google reviews roll in within the first 24 hours.</p>
@@ -181,13 +133,13 @@
     </section>
 
     <!-- Pricing -->
-    <section class="section section--tint" id="pricing">
+    <section class="section section--tint" id="pricing" data-scene='{"x":-0.85,"y":0.1,"s":0.7,"ry":0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">Pricing</span>
         <h2>Affordable Plans for Every Business</h2>
       </div>
       <div class="pricing" data-reveal>
-        <div class="price-card">
+        <div class="price-card glass">
           <span class="price-card__plan">Starter Plan</span>
           <div class="price-card__amount">$149<span>/mo</span></div>
           <p class="price-card__meta">50 requests per month</p>
@@ -201,7 +153,7 @@
           <a class="btn btn--primary" href="#calendar">Choose Starter</a>
           <p class="price-card__trial">14 Days Free · Cancel Anytime</p>
         </div>
-        <div class="price-card price-card--popular">
+        <div class="price-card price-card--popular glass">
           <span class="price-card__badge">Most Popular</span>
           <span class="price-card__plan">Growth Plan</span>
           <div class="price-card__amount">$229<span>/mo</span></div>
@@ -216,7 +168,7 @@
           <a class="btn btn--primary" href="#calendar">Choose Growth</a>
           <p class="price-card__trial">14 Days Free · Cancel Anytime</p>
         </div>
-        <div class="price-card">
+        <div class="price-card glass">
           <span class="price-card__plan">Pro Plan</span>
           <div class="price-card__amount">$329<span>/mo</span></div>
           <p class="price-card__meta">300 requests per month</p>
@@ -234,29 +186,29 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section">
+    <section class="section" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <h2>Frequently Asked Questions</h2>
         <p>Everything you need to know about our review automation system.</p>
       </div>
       <div class="faq" data-reveal>
-        <div class="faq-item">
+        <div class="faq-item glass">
           <button class="faq-item__q">What is Google review automation, and how does it work?<span class="faq-item__icon">+</span></button>
           <div class="faq-item__a"><p>After a job is done, we automatically text or email your customer a simple link that takes them straight to your Google review page — no app, no login, just a couple of taps.</p></div>
         </div>
-        <div class="faq-item">
+        <div class="faq-item glass">
           <button class="faq-item__q">Why are Google reviews important for my business?<span class="faq-item__icon">+</span></button>
           <div class="faq-item__a"><p>Reviews are the #1 trust signal for local service businesses. More recent, positive reviews mean higher map pack rankings and more customers choosing you over competitors.</p></div>
         </div>
-        <div class="faq-item">
+        <div class="faq-item glass">
           <button class="faq-item__q">How quickly will I see results?<span class="faq-item__icon">+</span></button>
           <div class="faq-item__a"><p>Most clients see their first new reviews within 24 hours of launch, and a steady, compounding flow within the first two weeks.</p></div>
         </div>
-        <div class="faq-item">
+        <div class="faq-item glass">
           <button class="faq-item__q">Is there a free trial available?<span class="faq-item__icon">+</span></button>
           <div class="faq-item__a"><p>Yes — every plan includes a 14-day free trial, and you can cancel anytime with no long-term commitment.</p></div>
         </div>
-        <div class="faq-item">
+        <div class="faq-item glass">
           <button class="faq-item__q">Are there any contracts or commitments?<span class="faq-item__icon">+</span></button>
           <div class="faq-item__a"><p>None. We don't believe in locking clients in — you stay because the system works, not because of a contract.</p></div>
         </div>
@@ -264,14 +216,14 @@
     </section>
 
     <!-- Booking calendar -->
-    <section class="section section--tint" id="calendar">
+    <section class="section section--tint" id="calendar" data-scene='{"x":-0.85,"y":0.1,"s":0.7,"ry":0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <h2>Book Your Free Growth Call</h2>
         <p>Select a time below to see how our review automation system can work for your business.</p>
       </div>
 
       <div class="calendar-widget" data-reveal>
-        <div class="calendar-widget__panel calendar-widget__info">
+        <div class="calendar-widget__panel calendar-widget__info glass">
           <span class="calendar-widget__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#star"/></svg></span>
           <h3>Reputation Strategy Call</h3>
           <div class="calendar-widget__meta">
@@ -282,7 +234,7 @@
           <p class="calendar-widget__desc">Pick a date and time that works for you. We'll confirm by email within minutes.</p>
         </div>
 
-        <div class="calendar-widget__panel calendar-widget__picker">
+        <div class="calendar-widget__panel calendar-widget__picker glass">
           <div class="cal-month">
             <button class="cal-nav" id="cal-prev" type="button" aria-label="Previous month">‹</button>
             <span id="cal-month-label"></span>
@@ -294,12 +246,12 @@
           <div class="cal-grid" id="cal-days"></div>
         </div>
 
-        <div class="calendar-widget__panel calendar-widget__slots" id="cal-slots-panel" hidden>
+        <div class="calendar-widget__panel calendar-widget__slots glass" id="cal-slots-panel" hidden>
           <h4 id="cal-selected-date"></h4>
           <div class="cal-slots" id="cal-slots"></div>
         </div>
 
-        <form class="calendar-widget__panel calendar-widget__form" id="cal-form" hidden>
+        <form class="calendar-widget__panel calendar-widget__form glass" id="cal-form" hidden>
           <h4>Your details</h4>
           <label>Full name<input type="text" name="name" required></label>
           <label>Email<input type="email" name="email" required></label>
@@ -308,7 +260,7 @@
           <button type="submit" class="btn btn--primary">Confirm Booking</button>
         </form>
 
-        <div class="calendar-widget__panel calendar-widget__confirm" id="cal-confirm" hidden>
+        <div class="calendar-widget__panel calendar-widget__confirm glass" id="cal-confirm" hidden>
           <span class="calendar-widget__confirm-icon">✓</span>
           <h3>You're booked!</h3>
           <p id="cal-confirm-text"></p>
@@ -318,29 +270,10 @@
 
   </main>
 
-  <footer class="site-footer-full">
-    <div class="site-footer-full__inner">
-      <div class="site-footer-full__brand">
-        <a class="brand" href="../index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-f" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span></a>
-        <p>Helping service businesses grow using simple systems that actually work.</p>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Services</h4>
-        <a href="reputation-management.html">Reputation Management</a>
-        <a href="smart-websites.html">Smart Websites</a>
-        <a href="google-seo.html">Google SEO</a>
-        <a href="google-ads.html">Google Ads</a>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Company</h4>
-        <a href="../index.html#why-us">Why Us</a>
-        <a href="../index.html#results">Results</a>
-        <a href="../book-call.html">Book a Call</a>
-      </div>
-    </div>
-    <div class="site-footer-full__legal">© <span id="year"></span> Review Dominators. All rights reserved.</div>
-  </footer>
-
-  <script src="../main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="../js/site.js"></script>
+  <script type="module" src="../js/rd.js"></script>
 </body>
 </html>

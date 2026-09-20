@@ -2,76 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#eef1f5">
-  <meta name="color-scheme" content="light">
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Google Ads — Review Dominators</title>
   <meta name="description" content="Enterprise-grade PPC strategy for local service businesses. AI-powered optimization, call tracking, and click fraud protection.">
+  <meta name="theme-color" content="#f3f7fc">
+  <script>document.documentElement.classList.add('js-anim')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body data-page="ads" data-base="../" data-variant="orb">
 
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob blob--1"></span>
-    <span class="blob blob--2"></span>
-    <span class="blob blob--3"></span>
-    <span class="bg-grid"></span>
-  </div>
+  <div class="bg" aria-hidden="true"><i class="blob blob--1"></i><i class="blob blob--2"></i><i class="blob blob--3"></i><i class="bg__grid"></i><i class="bg__grain"></i></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scene-fallback" aria-hidden="true"></div>
 
-  <header class="site-header" id="site-header">
-    <a class="brand" href="../index.html">
-      <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-h" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span>
-    </a>
+  <main id="top">
 
-    <nav class="site-nav" id="site-nav">
-      <div class="nav-item nav-item--dropdown">
-        <button class="nav-item__trigger" type="button" aria-expanded="false">
-          Services
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="nav-dropdown">
-          <a class="nav-dropdown__item" href="reputation-management.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#star"/></svg></span>
-            <span><strong>Reputation Management</strong><small>Automated 5-star review requests</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="smart-websites.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#monitor"/></svg></span>
-            <span><strong>Smart Websites</strong><small>High-converting service sites</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="google-seo.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#map-pin"/></svg></span>
-            <span><strong>Google SEO</strong><small>Rank in the local map pack</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="google-ads.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#target"/></svg></span>
-            <span><strong>Google Ads</strong><small>Paid leads on high-intent searches</small></span>
-          </a>
-        </div>
-      </div>
-      <a href="../index.html#how-it-works">How It Works</a>
-      <a href="../index.html#why-us">Why Us</a>
-      <a href="../index.html#results">Results</a>
-      <a class="btn btn--primary nav-cta" href="../book-call.html">Book a Free Growth Call</a>
-    </nav>
-
-    <div class="header__actions">
-      <a class="btn btn--primary btn--sm" href="../book-call.html">Book a Free Growth Call</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="svc-hero">
-      <div class="hero__glow" aria-hidden="true"></div>
+    <section class="svc-hero" data-scene='{"x":0.06,"y":-0.3,"s":0.75,"ry":0.4,"a":0.32}'>
       <div class="svc-hero__inner">
-        <div data-reveal>
+        <div class="svc-hero__copy" data-reveal>
           <span class="badge">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" fill="currentColor"/></svg>
             Senior-Level PPC Expertise
@@ -82,7 +34,7 @@
             <a class="btn btn--primary btn--lg" href="#calendar">Book a Free Growth Call</a>
           </div>
         </div>
-        <div class="mock mock--ads" data-tilt data-tilt-max="5" data-reveal>
+        <div class="mock mock--ads glass tilt" data-reveal>
           <div class="adcard">
             <div class="adcard__top"><span class="adcard__tag">Sponsored</span><span>www.yourbusiness.com</span></div>
             <div class="adcard__title">24/7 Emergency Plumber - Call Now</div>
@@ -101,7 +53,7 @@
     </section>
 
     <!-- What's included -->
-    <section class="section">
+    <section class="section" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">What's Included</span>
         <h2>No hidden fees, no missing pieces.</h2>
@@ -152,28 +104,28 @@
     </section>
 
     <!-- Why choose us -->
-    <section class="section section--tint">
+    <section class="section section--tint" data-scene='{"x":-0.85,"y":0.1,"s":0.7,"ry":0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">Why Choose Our Management</span>
         <h2>Built different, on purpose.</h2>
       </div>
       <div class="grid grid--4" data-reveal>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#home"/></svg></div>
           <h3>Built for Home Services</h3>
           <p>Not a generic PPC tool — every structure and template is purpose-built for your specific trade.</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#users"/></svg></div>
           <h3>AI + Human Expertise</h3>
           <p>Automation handles daily volume. Our senior PPC specialists handle the overarching strategy.</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#trending-up"/></svg></div>
           <h3>Conversion-Focused</h3>
           <p>We don't optimize for clicks or impressions — we optimize for phone calls and form submissions.</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item glass">
           <div class="feature-item__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#rocket"/></svg></div>
           <h3>Fast Onboarding</h3>
           <p>From questionnaire to live campaigns in 48 hours. Start getting calls within days.</p>
@@ -182,7 +134,7 @@
     </section>
 
     <!-- Industries -->
-    <section class="section">
+    <section class="section" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">Industries We Specialize In</span>
         <h2>Built for the trades.</h2>
@@ -198,29 +150,29 @@
     </section>
 
     <!-- How it works -->
-    <section class="section section--tint">
+    <section class="section section--tint" data-scene='{"x":-0.85,"y":0.1,"s":0.7,"ry":0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <span class="eyebrow-label">How It Works</span>
         <h2>Live in 48 hours.</h2>
         <p>A streamlined onboarding process to get your campaigns live fast.</p>
       </div>
       <div class="steps steps--4" data-reveal>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">1</span>
           <h3>Questionnaire</h3>
           <p>Fill out a simple form about your services, service area, and budget.</p>
         </div>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">2</span>
           <h3>The Build</h3>
           <p>We build the entire account: campaigns, landing pages, tracking, and fraud protection.</p>
         </div>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">3</span>
           <h3>Go Live</h3>
           <p>Campaigns go live. AI optimization and expert review begin immediately.</p>
         </div>
-        <div class="step">
+        <div class="step glass">
           <span class="step__num">4</span>
           <h3>Reporting</h3>
           <p>You receive regular performance reports showing calls, leads, and ROI.</p>
@@ -229,14 +181,14 @@
     </section>
 
     <!-- Booking calendar -->
-    <section class="section" id="calendar">
+    <section class="section" id="calendar" data-scene='{"x":0.85,"y":0.1,"s":0.7,"ry":-0.4,"a":0.12}'>
       <div class="section__head" data-reveal>
         <h2>Book Your Free Growth Call</h2>
         <p>Select a time below to see how our Client Acquisition System can work for your business.</p>
       </div>
 
       <div class="calendar-widget" data-reveal>
-        <div class="calendar-widget__panel calendar-widget__info">
+        <div class="calendar-widget__panel calendar-widget__info glass">
           <span class="calendar-widget__icon"><svg class="icon" aria-hidden="true"><use href="../icons.svg#target"/></svg></span>
           <h3>Ads Strategy Call</h3>
           <div class="calendar-widget__meta">
@@ -247,7 +199,7 @@
           <p class="calendar-widget__desc">Pick a date and time that works for you. We'll confirm by email within minutes.</p>
         </div>
 
-        <div class="calendar-widget__panel calendar-widget__picker">
+        <div class="calendar-widget__panel calendar-widget__picker glass">
           <div class="cal-month">
             <button class="cal-nav" id="cal-prev" type="button" aria-label="Previous month">‹</button>
             <span id="cal-month-label"></span>
@@ -259,12 +211,12 @@
           <div class="cal-grid" id="cal-days"></div>
         </div>
 
-        <div class="calendar-widget__panel calendar-widget__slots" id="cal-slots-panel" hidden>
+        <div class="calendar-widget__panel calendar-widget__slots glass" id="cal-slots-panel" hidden>
           <h4 id="cal-selected-date"></h4>
           <div class="cal-slots" id="cal-slots"></div>
         </div>
 
-        <form class="calendar-widget__panel calendar-widget__form" id="cal-form" hidden>
+        <form class="calendar-widget__panel calendar-widget__form glass" id="cal-form" hidden>
           <h4>Your details</h4>
           <label>Full name<input type="text" name="name" required></label>
           <label>Email<input type="email" name="email" required></label>
@@ -273,7 +225,7 @@
           <button type="submit" class="btn btn--primary">Confirm Booking</button>
         </form>
 
-        <div class="calendar-widget__panel calendar-widget__confirm" id="cal-confirm" hidden>
+        <div class="calendar-widget__panel calendar-widget__confirm glass" id="cal-confirm" hidden>
           <span class="calendar-widget__confirm-icon">✓</span>
           <h3>You're booked!</h3>
           <p id="cal-confirm-text"></p>
@@ -283,29 +235,10 @@
 
   </main>
 
-  <footer class="site-footer-full">
-    <div class="site-footer-full__inner">
-      <div class="site-footer-full__brand">
-        <a class="brand" href="../index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-f" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span></a>
-        <p>Helping service businesses grow using simple systems that actually work.</p>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Services</h4>
-        <a href="reputation-management.html">Reputation Management</a>
-        <a href="smart-websites.html">Smart Websites</a>
-        <a href="google-seo.html">Google SEO</a>
-        <a href="google-ads.html">Google Ads</a>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Company</h4>
-        <a href="../index.html#why-us">Why Us</a>
-        <a href="../index.html#results">Results</a>
-        <a href="../book-call.html">Book a Call</a>
-      </div>
-    </div>
-    <div class="site-footer-full__legal">© <span id="year"></span> Review Dominators. All rights reserved.</div>
-  </footer>
-
-  <script src="../main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="../js/site.js"></script>
+  <script type="module" src="../js/rd.js"></script>
 </body>
 </html>

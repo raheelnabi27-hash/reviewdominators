@@ -1,32 +1,38 @@
 # Review Dominators
 
-A single-page, static marketing site (plain HTML/CSS/JS, no build step) for Review Dominators,
-a growth agency for home service businesses — modeled after the layout and flow of
-[Golden Goose Growth](https://goldengoosegrowth.com).
+Static marketing site (plain HTML/CSS/JS, no build step) for Review Dominators, a growth agency
+for home service businesses. Liquid-glass design on a clinical-blue palette, with a WebGL 3D star,
+pinned scroll story, 3D playbook book and per-service animated mockups.
 
 ```
-index.html     markup for every section (hero, services, comparison, process, testimonials, CTA)
-styles.css     design tokens (:root) and layout
-main.js        mobile nav, scroll-reveal animation, ticker loop
-serve.py       local static server (Python stdlib only)
+index.html                      home page
+book-call.html                  booking page
+services/*.html                 the four service pages (pricing, FAQ, mockups, calendar)
+css/style.css                   design tokens (:root), glass system, components
+js/site.js                      header/footer shell, smooth scroll, reveals, tilt, splash, adaptive quality
+js/scene.js                     three.js 3D star / liquid orb (reads colours from the CSS tokens)
+js/home.js                      home-only motion: scroll-lit statement, pinned story, 3D book
+js/rd.js                        FAQ, booking calendar / embed hook, mockup animations
+icons.svg, favicon.svg          icon sprite and favicon
+serve.py                        local static server (Python stdlib only)
 ```
+
+The previous white / silver / black design is preserved in git as the tag `design-silver-black-v1`.
 
 ## Run it locally
 
 ```bash
-py serve.py
+py serve.py 4301
 ```
-
-Then open http://localhost:4300.
 
 ## Customize
 
-- Colours and fonts: `:root` tokens at the top of [styles.css](styles.css).
-- Copy, CTAs, testimonials: edit [index.html](index.html) directly — testimonial stats are
-  placeholders and should be swapped for real client results before launch.
-- Booking link: the final CTA and header button point at `#contact` / a `mailto:` link —
-  wire these up to a real booking tool (Calendly, etc.) when ready.
+- Colours: the `:root` palette block at the top of [css/style.css](css/style.css). The 3D scene picks them up automatically.
+- Fonts: Plus Jakarta Sans (headings) and Inter (body) via Google Fonts.
+- Booking: paste a Cal.com or Calendly link into `BOOKING_URL` in [js/rd.js](js/rd.js). While it is empty the pages show the front-end demo calendar, which sends nothing anywhere.
+- Header/footer links live in [js/site.js](js/site.js) (`SERVICES` and `buildShell`).
+- Quality: `?quality=high` forces full effects, `?quality=lite` forces the lighter mode. Slow devices switch to lite automatically.
 
 ## Deploy
 
-Static folder — works on Vercel/Netlify/GitHub Pages with no build command.
+Static folder: works on Vercel/Netlify/GitHub Pages with no build command.

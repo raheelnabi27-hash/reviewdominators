@@ -2,457 +2,437 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#eef1f5">
-  <meta name="color-scheme" content="light">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Review Dominators — More Calls, Jobs & 5-Star Reviews for Service Businesses</title>
   <meta name="description" content="Review Dominators helps home service businesses win more calls, jobs, and 5-star Google reviews with reputation automation, smart websites, SEO, and Google Ads.">
+  <meta name="theme-color" content="#f3f7fc">
+  <script>document.documentElement.classList.add('js-anim')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="home">
 
-  <!-- Ambient animated gradient blobs (fixed, behind everything) -->
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob blob--1"></span>
-    <span class="blob blob--2"></span>
-    <span class="blob blob--3"></span>
-    <span class="bg-grid"></span>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__pane loader__pane--top"></div>
+    <div class="loader__pane loader__pane--bot"></div>
+    <i class="loader__glow"></i>
+    <div class="loader__center">
+      <div class="loader__mark">
+        <svg class="loader__ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56"/></svg>
+        <span class="brand__mark" data-logo></span>
+      </div>
+      <div class="loader__name"><span style="--i:0">Review</span><span style="--i:1">Dominators</span></div>
+      <div class="loader__sub">Home-service growth agency</div>
+    </div>
+    <div class="loader__foot"><span>More calls.<br>More jobs. More stars.</span><b id="loader-count">0</b></div>
+    <div class="loader__bar"><i id="loader-bar"></i></div>
   </div>
 
-  <!-- Fixed header -->
-  <header class="site-header" id="site-header">
-    <a class="brand" href="#top">
-      <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-h" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span>
-    </a>
-
-    <nav class="site-nav" id="site-nav">
-      <div class="nav-item nav-item--dropdown">
-        <button class="nav-item__trigger" type="button" aria-expanded="false">
-          Services
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="nav-dropdown">
-          <a class="nav-dropdown__item" href="services/reputation-management.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#star"/></svg></span>
-            <span><strong>Reputation Management</strong><small>Automated 5-star review requests</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="services/smart-websites.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#monitor"/></svg></span>
-            <span><strong>Smart Websites</strong><small>High-converting service sites</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="services/google-seo.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#map-pin"/></svg></span>
-            <span><strong>Google SEO</strong><small>Rank in the local map pack</small></span>
-          </a>
-          <a class="nav-dropdown__item" href="services/google-ads.html">
-            <span class="nav-dropdown__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#target"/></svg></span>
-            <span><strong>Google Ads</strong><small>Paid leads on high-intent searches</small></span>
-          </a>
-        </div>
-      </div>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#why-us">Why Us</a>
-      <a href="#results">Results</a>
-      <a class="btn btn--primary nav-cta" href="book-call.html">Book a Free Growth Call</a>
-    </nav>
-
-    <div class="header__actions">
-      <a class="btn btn--primary btn--sm" href="book-call.html">Book a Free Growth Call</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+  <div class="bg" aria-hidden="true"><i class="blob blob--1"></i><i class="blob blob--2"></i><i class="blob blob--3"></i><i class="bg__grid"></i><i class="bg__grain"></i></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scene-fallback" aria-hidden="true"></div>
 
   <main id="top">
 
     <!-- Hero -->
-    <section class="hero" id="hero">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="hero__inner">
-        <div class="hero__copy" data-reveal>
-          <span class="badge">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" fill="currentColor"/></svg>
-            Built for Service Businesses
-          </span>
-
-          <h1 class="hero__title">
-            Get more calls, more jobs, and
-            <span class="accent-text">more 5-star reviews</span>
-            from Google.
-          </h1>
-
-          <p class="hero__sub">
-            The more visible and trusted you are on Google, the more business you get.
-            We help service businesses turn Google into a consistent source of inbound leads.
-          </p>
-
-          <div class="hero__ctas">
-            <a class="btn btn--primary btn--lg" href="book-call.html">Book a Free Growth Call</a>
+    <section class="hero" data-scene='{"x":0.8,"y":0,"s":1,"ry":0.35,"a":1}'>
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow" data-reveal><i class="dot"></i>Built for service businesses</span>
+          <h1 class="display split">Get more calls, more jobs, and <em>more 5-star reviews</em> from Google.</h1>
+          <p class="lead" data-reveal style="--d:350ms">The more visible and trusted you are on Google, the more business you get. We turn Google into a steady source of inbound leads.</p>
+          <div class="cta-row" data-reveal style="--d:500ms">
+            <a class="btn btn--primary btn--lg" href="book-call.html" data-magnetic>Book a free growth call <span data-icon="arrow" data-icon-class="arrow"></span></a>
+            <a class="btn btn--ghost btn--lg" href="#services" data-magnetic>See our 4 systems</a>
           </div>
-
-          <div class="hero__proof">
-            <div class="avatar-stack" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <p>Proven systems used by real service businesses</p>
+          <div class="hero__meta" data-reveal style="--d:650ms">
+            <span class="chip"><span data-icon="unlock"></span>No contracts</span>
+            <span class="chip"><span data-icon="clock"></span>Live within a week</span>
+            <span class="chip"><span data-icon="star"></span>Proven with real service businesses</span>
           </div>
         </div>
 
-        <div class="hero__visual" data-reveal>
-          <div class="phone-float">
-            <div class="phone" id="phone-tilt" data-tilt data-tilt-max="10">
-              <span class="phone__btn phone__btn--action"></span>
-              <span class="phone__btn phone__btn--volup"></span>
-              <span class="phone__btn phone__btn--voldn"></span>
-              <span class="phone__btn phone__btn--power"></span>
-              <div class="phone__bezel">
-                <div class="phone__screen">
-                  <div class="phone__island"></div>
-
-                  <div class="phone__status" aria-hidden="true">
-                    <span class="phone__status-time">9:41</span>
-                    <span class="phone__status-icons">
-                      <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.500" width="3" height="6.500" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
-                      <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round"><path d="M1.500 4.200a9.500 9.500 0 0 1 13 0"/><path d="M4 7a6 6 0 0 1 8 0"/><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
-                      <svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.500" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="1.600" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>
-                    </span>
-                  </div>
-
-                  <div class="phone__lock">
-                    <svg class="icon phone__lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-                    <div class="phone__date">Monday, May 3</div>
-                    <div class="phone__clock">9:41</div>
-                  </div>
-
-                  <div class="phone__feed">
-                    <div class="notif" style="--d:.2s">
-                      <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#user"/></svg></span>
-                      <div class="notif__body">
-                        <div class="notif__top"><strong>Review Dominators</strong><time>now</time></div>
-                        <p class="notif__title">New Lead Received</p>
-                        <p class="notif__text">John D. requested a quote.</p>
-                      </div>
-                    </div>
-
-                    <div class="notif" style="--d:.6s">
-                      <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#star"/></svg></span>
-                      <div class="notif__body">
-                        <div class="notif__top"><strong>Review Dominators</strong><time>2m ago</time></div>
-                        <p class="notif__title">New 5-Star Review</p>
-                        <p class="notif__text">"Best service ever! Highly..."</p>
-                      </div>
-                    </div>
-
-                    <div class="notif" style="--d:1s">
-                      <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"/></svg></span>
-                      <div class="notif__body">
-                        <div class="notif__top"><strong>Review Dominators</strong><time>15m ago</time></div>
-                        <p class="notif__title">Job Booked</p>
-                        <p class="notif__text">Appointment set for tomorrow.</p>
-                      </div>
-                    </div>
-
-                    <div class="notif notif--last" style="--d:1.4s">
-                      <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#message-square"/></svg></span>
-                      <div class="notif__body">
-                        <div class="notif__top"><strong>Review Dominators</strong><time>1h ago</time></div>
-                        <p class="notif__title">New Message</p>
-                        <p class="notif__text">"Hey, are you available..."</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="phone__quick" aria-hidden="true">
-                    <span class="phone__quick-btn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6c0 2-2 2-2 4v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10c0-2-2-2-2-4V2h12z"/><line x1="6" x2="18" y1="6" y2="6"/><line x1="12" x2="12" y1="12" y2="12"/></svg></span>
-                    <span class="phone__quick-btn"><svg class="icon" viewBox="0 0 24 24"><path d="M14.500 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
-                  </div>
-                  <div class="phone__home" aria-hidden="true"></div>
-                </div>
-              </div>
+        <div class="hero__visual">
+          <div class="hero__stage" aria-hidden="true">
+            <div class="hero__float hero__float--a glass" data-reveal="scale" style="--d:900ms">
+              <span class="ico ico--gold" data-icon="star"></span>
+              <div><div class="stars-row" data-icon="star" data-repeat="5"></div><b>4.9 rating</b><small>214 Google reviews</small></div>
+            </div>
+            <div class="hero__float hero__float--b glass" data-reveal="scale" style="--d:1100ms">
+              <span class="ico" data-icon="pin"></span>
+              <div><b>#1 in the Map Pack</b><small>Up 3 spots this month</small></div>
+            </div>
+            <div class="hero__float hero__float--c glass" data-reveal="scale" style="--d:1300ms">
+              <span class="ico" data-icon="phone"></span>
+              <div><b class="big">+38 calls</b><small>in the last 30 days</small></div>
             </div>
           </div>
         </div>
       </div>
+      <div class="scroll-cue" aria-hidden="true">Scroll<i></i></div>
+    </section>
 
-      <!-- Trades ticker -->
-      <div class="ticker" data-reveal>
-        <p class="ticker__label">Proudly serving local service businesses</p>
-        <div class="ticker__track">
-          <div class="ticker__row" id="ticker-row">
-            <span>Plumbing</span><span>HVAC</span><span>Electrical</span><span>Landscaping</span>
-            <span>Roofing</span><span>Pest Control</span><span>Arborist</span><span>Painting</span>
-            <span>Cleaning</span><span>Garage Doors</span>
+    <!-- Marquee -->
+    <div class="marquee" aria-label="Businesses we serve">
+      <div class="marquee__track">
+        <span>Plumbing</span><span>HVAC</span><span>Electrical</span><span>Landscaping</span><span>Roofing</span><span>Pest control</span><span>Arborist</span><span>Painting</span><span>Cleaning</span><span>Garage doors</span>
+      </div>
+    </div>
+
+    <!-- Statement + stats -->
+    <section class="section" id="about" data-scene='{"x":-0.9,"y":0.05,"s":0.85,"ry":-0.5,"a":0.55}'>
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow" data-reveal>Why Google matters</span>
+        </div>
+        <p class="statement" id="statement">When someone's water heater dies at 7pm, they don't browse. They Google, and they call the business with <em>the most stars and the best map ranking.</em> We make sure that's you.</p>
+        <div class="grid grid--4 stats" data-stagger>
+          <div class="glass stat tilt"><div class="stat__num" data-count-up data-count="92" data-suffix="%">92%</div><div class="stat__label">Read online reviews before choosing</div></div>
+          <div class="glass stat tilt"><div class="stat__num" data-count-up data-count="72" data-suffix="%">72%</div><div class="stat__label">Wait for a positive review to act</div></div>
+          <div class="glass stat tilt"><div class="stat__num" data-count-up data-count="54" data-suffix="%">54%</div><div class="stat__label">More revenue with 40+ reviews</div></div>
+          <div class="glass stat tilt"><div class="stat__num" data-count-up data-count="84" data-suffix="%">84%</div><div class="stat__label">Trust reviews like a friend's advice</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pinned story -->
+    <section class="story" id="story" aria-label="How a review becomes a booked job">
+      <div class="story__inner wrap">
+        <div class="story__chapters">
+          <article class="story__ch is-active" data-hud="Phase <b>01</b> — Request">
+            <span class="story__num">01</span>
+            <h2 class="display">Ask at the <em>right moment.</em></h2>
+            <p>The second a job is done, your happy customer gets a friendly text with a one-tap link to your Google page. No app, no login.</p>
+          </article>
+          <article class="story__ch" data-hud="Phase <b>02</b> — Respond">
+            <span class="story__num">02</span>
+            <h2 class="display">Reply to <em>every review.</em></h2>
+            <p>AI drafts thoughtful responses, posts your best reviews as branded images, and keeps your profile active without you lifting a finger.</p>
+          </article>
+          <article class="story__ch" data-hud="Phase <b>03</b> — Rank">
+            <span class="story__num">03</span>
+            <h2 class="display">Climb the <em>map pack.</em></h2>
+            <p>More recent, positive reviews and a tuned Google Business Profile push you up the local results, right where customers are looking.</p>
+          </article>
+          <article class="story__ch" data-hud="Phase <b>04</b> — Book">
+            <span class="story__num">04</span>
+            <h2 class="display">Turn clicks into <em>booked jobs.</em></h2>
+            <p>A fast, mobile-first website and smart Google Ads catch the traffic, so your phone rings and your calendar fills.</p>
+          </article>
+        </div>
+        <div class="story__hud" id="story-hud"></div>
+        <div class="story__rail">
+          <div class="story__steps">
+            <button class="story__step is-active" type="button">Request</button>
+            <button class="story__step" type="button">Respond</button>
+            <button class="story__step" type="button">Rank</button>
+            <button class="story__step" type="button">Book</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Built for every stage -->
-    <section class="section" id="stages">
-      <div class="section__head" data-reveal>
-        <h2>Built for Every Stage of Your Business</h2>
-        <p>Whether you're just starting out or scaling a multi-truck operation, we have the systems to fuel your growth.</p>
-      </div>
-
-      <div class="grid grid--3" data-reveal>
-        <div class="stage-card" data-tilt data-tilt-max="6">
-          <span class="stage-card__tag">01</span>
-          <h3>Owner Operator</h3>
-          <p>Just getting started or running solo? We help you build trust fast with a clean website and your first consistent 5-star reviews.</p>
+    <section class="section" id="stages" data-scene='{"x":0,"y":0.35,"s":0.6,"ry":0.2,"a":0.14}'>
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow" data-reveal>Every stage</span>
+          <h2 class="display split">Built for every stage of <em>your business.</em></h2>
+          <p class="lead" data-reveal>Just starting out or running a multi-truck operation, we have the systems to fuel your growth.</p>
         </div>
-        <div class="stage-card stage-card--active" data-tilt data-tilt-max="6">
-          <span class="stage-card__tag">02</span>
-          <h3>Growing Team</h3>
-          <p>Got a few techs and want more consistent jobs? We install systems that bring in steady calls and reviews every week.</p>
-        </div>
-        <div class="stage-card" data-tilt data-tilt-max="6">
-          <span class="stage-card__tag">03</span>
-          <h3>Scaling Company</h3>
-          <p>Running multiple crews? We help you dominate your local market with stronger rankings, better reputation, and predictable lead flow.</p>
+        <div class="grid grid--3" data-stagger>
+          <div class="glass program program--stage tilt">
+            <span class="program__num">01</span>
+            <div><h3>Owner Operator</h3><p>Just getting started or running solo? We help you build trust fast with a clean website and your first consistent 5-star reviews.</p></div>
+          </div>
+          <div class="glass program program--stage is-featured tilt">
+            <span class="program__num">02</span>
+            <div><h3>Growing Team</h3><p>Got a few techs and want more consistent jobs? We install systems that bring in steady calls and reviews every week.</p></div>
+          </div>
+          <div class="glass program program--stage tilt">
+            <span class="program__num">03</span>
+            <div><h3>Scaling Company</h3><p>Running multiple crews? We help you dominate your local market with stronger rankings, better reputation, and predictable lead flow.</p></div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- 4 systems -->
-    <section class="section section--tint" id="services">
-      <div class="section__head" data-reveal>
-        <h2>The 4 Systems Every Modern Service Business Needs</h2>
-        <p>Simple, effective systems designed specifically for home service professionals.</p>
+    <section class="section" id="services" data-scene='{"x":0,"y":0.35,"s":0.6,"ry":-0.2,"a":0.14}'>
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow" data-reveal>Our services</span>
+          <h2 class="display split">The 4 systems every modern service business <em>needs.</em></h2>
+          <p class="lead" data-reveal>Simple, effective systems designed specifically for home service professionals.</p>
+        </div>
+        <div class="grid grid--4" data-stagger>
+          <a class="glass program tilt" href="services/reputation-management.html">
+            <span class="program__num">01</span>
+            <span class="program__ico" data-icon="star"></span>
+            <div>
+              <h3>Reputation Management</h3>
+              <p>Automated SMS review requests that increase 5-star reviews consistently and improve your Google rankings.</p>
+              <ul><li>Consistent flow of 5-star reviews</li><li>Automated SMS follow-ups</li></ul>
+              <span class="program__link">Learn more <span data-icon="arrow" data-icon-class="arrow"></span></span>
+            </div>
+          </a>
+          <a class="glass program tilt" href="services/smart-websites.html">
+            <span class="program__num">02</span>
+            <span class="program__ico" data-icon="monitor"></span>
+            <div>
+              <h3>Smart Websites</h3>
+              <p>Clean, high-converting websites built for service businesses to turn traffic into booked jobs.</p>
+              <ul><li>Mobile-first, fast-loading design</li><li>Built to convert visitors into leads</li></ul>
+              <span class="program__link">Learn more <span data-icon="arrow" data-icon-class="arrow"></span></span>
+            </div>
+          </a>
+          <a class="glass program tilt" href="services/google-seo.html">
+            <span class="program__num">03</span>
+            <span class="program__ico" data-icon="pin"></span>
+            <div>
+              <h3>Google SEO</h3>
+              <p>Be the business people find first when they search for your services online.</p>
+              <ul><li>Optimize Google Business Profile</li><li>Improve local map pack rankings</li></ul>
+              <span class="program__link">Learn more <span data-icon="arrow" data-icon-class="arrow"></span></span>
+            </div>
+          </a>
+          <a class="glass program tilt" href="services/google-ads.html">
+            <span class="program__num">04</span>
+            <span class="program__ico" data-icon="target"></span>
+            <div>
+              <h3>Google Ads</h3>
+              <p>Show up at the top of Google instantly for high-intent search terms.</p>
+              <ul><li>High-converting search campaigns</li><li>Focus on ROI and booked jobs</li></ul>
+              <span class="program__link">Learn more <span data-icon="arrow" data-icon-class="arrow"></span></span>
+            </div>
+          </a>
+        </div>
       </div>
+    </section>
 
-      <div class="grid grid--4" data-reveal>
-        <div class="svc-card" data-tilt data-tilt-max="8">
-          <div class="svc-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#star"/></svg></div>
-          <h3>Reputation Management</h3>
-          <p>Automated system that requests reviews from customers via SMS. Increases 5-star reviews consistently and improves Google rankings.</p>
-          <ul>
-            <li>Consistent flow of 5-star reviews</li>
-            <li>Automated SMS follow-ups</li>
-          </ul>
-          <a class="svc-card__link" href="services/reputation-management.html">Learn more →</a>
-        </div>
-        <div class="svc-card" data-tilt data-tilt-max="8">
-          <div class="svc-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#monitor"/></svg></div>
-          <h3>Smart Websites</h3>
-          <p>Clean, high-converting websites built specifically for service businesses to turn traffic into booked jobs.</p>
-          <ul>
-            <li>Mobile-first, fast-loading design</li>
-            <li>Built to convert visitors into leads</li>
-          </ul>
-          <a class="svc-card__link" href="services/smart-websites.html">Learn more →</a>
-        </div>
-        <div class="svc-card" data-tilt data-tilt-max="8">
-          <div class="svc-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#map-pin"/></svg></div>
-          <h3>Google SEO</h3>
-          <p>Be the business people find first when they search for your services online.</p>
-          <ul>
-            <li>Optimize Google Business Profile</li>
-            <li>Improve local map pack rankings</li>
-          </ul>
-          <a class="svc-card__link" href="services/google-seo.html">Learn more →</a>
-        </div>
-        <div class="svc-card" data-tilt data-tilt-max="8">
-          <div class="svc-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#target"/></svg></div>
-          <h3>Google Ads</h3>
-          <p>Show up at the top of Google instantly for high-intent search terms.</p>
-          <ul>
-            <li>High-converting search campaigns</li>
-            <li>Focus on ROI and booked jobs</li>
-          </ul>
-          <a class="svc-card__link" href="services/google-ads.html">Learn more →</a>
+    <!-- Phone demo -->
+    <section class="section" id="demo" data-scene='{"x":0,"y":0.4,"s":0.55,"ry":0.4,"a":0.12}'>
+      <div class="wrap">
+        <div class="demo">
+          <div class="demo__phone">
+            <div class="phone-float">
+              <div class="phone tilt" data-tilt="10">
+                <span class="phone__btn phone__btn--action"></span>
+                <span class="phone__btn phone__btn--volup"></span>
+                <span class="phone__btn phone__btn--voldn"></span>
+                <span class="phone__btn phone__btn--power"></span>
+                <div class="phone__bezel">
+                  <div class="phone__screen">
+                    <div class="phone__island"></div>
+                    <div class="phone__status" aria-hidden="true">
+                      <span>9:41</span>
+                      <span class="phone__status-icons">
+                        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0"/><path d="M4 7a6 6 0 0 1 8 0"/><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
+                        <svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>
+                      </span>
+                    </div>
+                    <div class="phone__lock">
+                      <svg class="icon phone__lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="10" x="5" y="11" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                      <div class="phone__date">Monday, May 3</div>
+                      <div class="phone__clock">9:41</div>
+                    </div>
+                    <div class="phone__feed">
+                      <div class="notif" style="--d:.4s">
+                        <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#user"/></svg></span>
+                        <div class="notif__body"><div class="notif__top"><strong>Review Dominators</strong><time>now</time></div><p class="notif__title">New Lead Received</p><p class="notif__text">John D. requested a quote.</p></div>
+                      </div>
+                      <div class="notif" style="--d:.8s">
+                        <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#star"/></svg></span>
+                        <div class="notif__body"><div class="notif__top"><strong>Review Dominators</strong><time>2m ago</time></div><p class="notif__title">New 5-Star Review</p><p class="notif__text">"Best service ever! Highly..."</p></div>
+                      </div>
+                      <div class="notif" style="--d:1.2s">
+                        <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"/></svg></span>
+                        <div class="notif__body"><div class="notif__top"><strong>Review Dominators</strong><time>15m ago</time></div><p class="notif__title">Job Booked</p><p class="notif__text">Appointment set for tomorrow.</p></div>
+                      </div>
+                      <div class="notif" style="--d:1.6s">
+                        <span class="notif__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#message-square"/></svg></span>
+                        <div class="notif__body"><div class="notif__top"><strong>Review Dominators</strong><time>1h ago</time></div><p class="notif__title">New Message</p><p class="notif__text">"Hey, are you available..."</p></div>
+                      </div>
+                    </div>
+                    <div class="phone__quick" aria-hidden="true">
+                      <span class="phone__quick-btn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6c0 2-2 2-2 4v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10c0-2-2-2-2-4V2h12z"/><line x1="6" x2="18" y1="6" y2="6"/></svg></span>
+                      <span class="phone__quick-btn"><svg class="icon" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
+                    </div>
+                    <div class="phone__home" aria-hidden="true"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="demo__copy">
+            <span class="eyebrow" data-reveal>Your phone, ringing</span>
+            <h2 class="display split">Every lead, review and booking lands <em>in your pocket.</em></h2>
+            <p class="lead" data-reveal>You focus on the work. Our systems request the reviews, capture the leads and fill the calendar, and you get a ping the moment something happens.</p>
+            <ul class="ticks" data-reveal>
+              <li><span data-icon="check"></span>Instant alerts for new leads and 5-star reviews</li>
+              <li><span data-icon="check"></span>Jobs booked straight into your calendar</li>
+              <li><span data-icon="check"></span>Everything tracked so you see what's working</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Two paths -->
-    <section class="section" id="strategy">
-      <div class="section__head" data-reveal>
-        <span class="badge badge--muted">Two Paths. One Goal.</span>
-        <h2>Sustainable Growth for Your Business.</h2>
-        <p>Long-term growth builds a foundation. Short-term growth drives results today.</p>
-      </div>
-
-      <div class="paths" data-reveal>
-        <div class="path-card">
-          <span class="path-card__eyebrow">Long-Term Growth</span>
-          <h3>Build Today. Grow Forever.</h3>
-          <p>Sustainable growth through strategic assets that compound over time.</p>
-          <div class="path-card__rows">
-            <div><strong>Review Automation</strong><span>More 5-star reviews · Stronger reputation · Higher conversion rates</span></div>
-            <div><strong>SEO Work</strong><span>Higher rankings · More organic traffic · Lower cost per lead over time</span></div>
-            <div><strong>Website Optimization</strong><span>Better UX · Higher conversions · Supports all other channels</span></div>
+    <section class="section" id="strategy" data-scene='{"x":0,"y":0.4,"s":0.55,"ry":0.9,"a":0.12}'>
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow" data-reveal>Two paths. One goal.</span>
+          <h2 class="display split">Sustainable growth for <em>your business.</em></h2>
+          <p class="lead" data-reveal>Long-term growth builds a foundation. Short-term growth drives results today. We help you do both.</p>
+        </div>
+        <div class="split-panels" data-stagger>
+          <div class="glass glass--lg panel">
+            <span class="panel__glow"></span>
+            <div class="cta-row" style="justify-content:space-between;align-items:center"><h3 class="display" style="font-size:clamp(1.45rem,2.3vw,2.05rem)">Build today. Grow forever.</h3><span class="tag">Long-term</span></div>
+            <p class="lead">Sustainable growth through strategic assets that compound over time.</p>
+            <div class="tlist">
+              <div class="trow">Review automation<small>More 5-star reviews · stronger reputation · higher conversion</small></div>
+              <div class="trow">SEO work<small>Higher rankings · more organic traffic · lower cost per lead</small></div>
+              <div class="trow">Website optimization<small>Better UX · higher conversions · supports every channel</small></div>
+            </div>
+            <p class="panel__note">Invest now. Benefit forever.</p>
           </div>
-          <p class="path-card__note">Invest now. Benefit forever.</p>
+          <div class="glass glass--lg panel panel--alt">
+            <span class="panel__glow"></span>
+            <div class="cta-row" style="justify-content:space-between;align-items:center"><h3 class="display" style="font-size:clamp(1.45rem,2.3vw,2.05rem)">Results now.</h3><span class="tag">Short-term</span></div>
+            <p class="lead">Immediate visibility and leads through paid advertising.</p>
+            <div class="tlist">
+              <div class="trow">Google Ads<small>Leads start coming in quickly · highly targeted traffic · pay per click</small></div>
+            </div>
+            <p class="panel__note">Immediate results. Stops when you stop paying.</p>
+          </div>
         </div>
 
-        <div class="path-vs" aria-hidden="true">VS</div>
-
-        <div class="path-card path-card--dark">
-          <span class="path-card__eyebrow">Short-Term Growth</span>
-          <h3>Results Now.</h3>
-          <p>Immediate visibility and leads through paid advertising.</p>
-          <div class="path-card__rows">
-            <div><strong>Google Ads</strong><span>Leads start coming in quickly · Highly targeted traffic · Pay for every click</span></div>
-          </div>
-          <p class="path-card__note">Immediate results. Stops when you stop paying.</p>
+        <div class="glass glass--lg compare" data-reveal>
+          <h3 class="compare__title">Side-by-side comparison</h3>
+          <table class="compare__table">
+            <thead><tr><th>Long-term growth</th><th>Focus</th><th>Short-term growth</th></tr></thead>
+            <tbody>
+              <tr><td>Builds equity &amp; lasting assets</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#target"/></svg></td><td>Buys visibility &amp; immediate leads</td></tr>
+              <tr><td>Lower cost per lead over time</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#dollar-sign"/></svg></td><td>Higher cost per lead</td></tr>
+              <tr><td>Compounds &amp; grows over time</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#trending-up"/></svg></td><td>Stops when you stop paying</td></tr>
+              <tr><td>Stronger brand trust &amp; authority</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#shield-check"/></svg></td><td>Less brand equity</td></tr>
+              <tr><td>Sustainable, predictable growth</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#sprout"/></svg></td><td>Not sustainable long-term</td></tr>
+            </tbody>
+          </table>
+          <p class="compare__cta">We help you do both: immediate results plus a long-term growth engine.</p>
         </div>
-      </div>
-
-      <div class="compare" data-reveal>
-        <h3 class="compare__title">Side-by-Side Comparison</h3>
-        <table class="compare__table">
-          <thead>
-            <tr><th>Long-Term Growth</th><th>Focus</th><th>Short-Term Growth</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Builds equity &amp; lasting assets</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#target"/></svg></td><td>Buys visibility &amp; immediate leads</td></tr>
-            <tr><td>Lower cost per lead over time</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#dollar-sign"/></svg></td><td>Higher cost per lead</td></tr>
-            <tr><td>Compounds &amp; grows over time</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#trending-up"/></svg></td><td>Stops when you stop paying</td></tr>
-            <tr><td>Stronger brand trust &amp; authority</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#shield-check"/></svg></td><td>Less brand equity</td></tr>
-            <tr><td>Sustainable, predictable growth</td><td><svg class="icon" aria-hidden="true"><use href="icons.svg#sprout"/></svg></td><td>Not sustainable long-term</td></tr>
-          </tbody>
-        </table>
-        <p class="compare__cta">We help you do both — immediate results plus a long-term growth engine.</p>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="section section--tint" id="how-it-works">
-      <div class="section__head" data-reveal>
-        <h2>How It Works</h2>
-        <p>A simple, proven process to get your phone ringing.</p>
-      </div>
-
-      <div class="steps" data-reveal>
-        <div class="step">
-          <span class="step__num">1</span>
-          <h3>Growth Call</h3>
-          <p>We hop on a call to understand your business, get to know your needs, and provide a tailored solution.</p>
+    <section class="section" id="how" data-scene='{"x":0,"y":0.4,"s":0.55,"ry":-0.6,"a":0.12}'>
+      <div class="wrap">
+        <div class="section__head section__head--center">
+          <span class="eyebrow" data-reveal>How it works</span>
+          <h2 class="display split">A simple, proven process to get <em>your phone ringing.</em></h2>
         </div>
-        <div class="step">
-          <span class="step__num">2</span>
-          <h3>We Build</h3>
-          <p>Once we partner up, we build and install your custom growth systems, ready to launch within a week.</p>
-        </div>
-        <div class="step">
-          <span class="step__num">3</span>
-          <h3>You Grow</h3>
-          <p>After that first week, your new systems start working immediately to bring in more calls, reviews, and jobs.</p>
+        <div class="timeline" data-stagger>
+          <div class="glass tl tilt"><span class="tl__dot">1</span><b>Growth call</b><p>We hop on a call to understand your business, get to know your needs, and provide a tailored solution.</p></div>
+          <div class="glass tl tilt"><span class="tl__dot">2</span><b>We build</b><p>Once we partner up, we build and install your custom growth systems, ready to launch within a week.</p></div>
+          <div class="glass tl tilt"><span class="tl__dot">3</span><b>You grow</b><p>After that first week, your new systems start working immediately to bring in more calls, reviews, and jobs.</p></div>
         </div>
       </div>
     </section>
 
     <!-- Why us -->
-    <section class="section" id="why-us">
-      <div class="section__head" data-reveal>
-        <h2>Why Review Dominators?</h2>
-        <p>Marketing agencies are notorious for being deceitful, locking businesses into long-term contracts with zero results. We do things differently.</p>
+    <section class="section" id="why" data-scene='{"x":0,"y":0.4,"s":0.55,"ry":0.3,"a":0.12}'>
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow" data-reveal>Why Review Dominators</span>
+          <h2 class="display split">We do things <em>differently.</em></h2>
+          <p class="lead" data-reveal>Marketing agencies are notorious for locking businesses into long-term contracts with zero results. We don't.</p>
+        </div>
+        <div class="grid grid--3" data-stagger>
+          <div class="glass value tilt"><span class="value__ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#unlock"/></svg></span><h3>Zero contracts</h3><p>We don't do contracts. We want you to stay because you actually like us and because we're getting you results.</p></div>
+          <div class="glass value tilt"><span class="value__ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#compass"/></svg></span><h3>Ethics &amp; service first</h3><p>We pride ourselves on our ethics and our dedication to service. No fluff, no hidden fees, just honest work.</p></div>
+          <div class="glass value tilt"><span class="value__ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#heart"/></svg></span><h3>People over profit</h3><p>Business isn't just about business, it's about people. We treat your business like it's our own.</p></div>
+        </div>
+        <blockquote class="founder" data-reveal>
+          <p>“Our goal isn't just to generate leads. It's to build long-term relationships with service professionals who want a marketing partner they can actually trust.”</p>
+          <cite>The founders, Review Dominators</cite>
+        </blockquote>
       </div>
-
-      <div class="grid grid--3" data-reveal>
-        <div class="value-card" data-tilt data-tilt-max="6">
-          <div class="value-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#unlock"/></svg></div>
-          <h3>Zero Contracts</h3>
-          <p>We don't do contracts. We want you to stay with us because you actually like us and because we're getting you results.</p>
-        </div>
-        <div class="value-card" data-tilt data-tilt-max="6">
-          <div class="value-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#compass"/></svg></div>
-          <h3>Ethics &amp; Service First</h3>
-          <p>We pride ourselves on our ethics and our dedication to service. No fluff, no hidden fees, just honest work.</p>
-        </div>
-        <div class="value-card" data-tilt data-tilt-max="6">
-          <div class="value-card__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#heart"/></svg></div>
-          <h3>People Over Profit</h3>
-          <p>Business isn't just about business — it's about people. The people we work with mean a lot to us, and we treat your business like it's our own.</p>
-        </div>
-      </div>
-
-      <blockquote class="founder-quote" data-reveal>
-        <p>"Our goal isn't just to generate leads. It's to build long-term relationships with service professionals who want a marketing partner they can actually trust."</p>
-        <cite>— The Founders, Review Dominators</cite>
-      </blockquote>
     </section>
 
-    <!-- Testimonials -->
-    <section class="section section--tint" id="results">
-      <div class="section__head" data-reveal>
-        <span class="badge badge--muted">Testimonials</span>
-        <h2>What Our Clients Are Saying</h2>
-      </div>
-
-      <div class="grid grid--3" data-reveal>
-        <div class="quote-card" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">14 → 60 reviews in 3 weeks</p>
-          <p class="quote-card__name">Landscaping Co. Owner</p>
+    <!-- Results -->
+    <section class="section" id="results" data-scene='{"x":0,"y":0.4,"s":0.55,"ry":-0.4,"a":0.12}'>
+      <div class="wrap">
+        <div class="section__head section__head--center">
+          <span class="eyebrow" data-reveal>Client results</span>
+          <h2 class="display split">What our clients are <em>saying.</em></h2>
         </div>
-        <div class="quote-card" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">60 new reviews in 3 weeks</p>
-          <p class="quote-card__name">Wellness Studio Owner</p>
-        </div>
-        <div class="quote-card" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">20 → 50 reviews in 1 week</p>
-          <p class="quote-card__name">Junk Removal Owner</p>
-        </div>
-        <div class="quote-card" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">22 → 44 reviews in 1 week</p>
-          <p class="quote-card__name">Holistic Center Owner</p>
-        </div>
-        <div class="quote-card" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">30 → 150 reviews in 2 weeks</p>
-          <p class="quote-card__name">Tree Service Owner</p>
-        </div>
-        <div class="quote-card quote-card--muted" data-tilt data-tilt-max="6">
-          <div class="quote-card__stars">★★★★★</div>
-          <p class="quote-card__stat">Your results here</p>
-          <p class="quote-card__name">Book a free growth call to get started</p>
+        <div class="grid grid--3" data-stagger>
+          <figure class="glass result tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">14 → 60 reviews in 3 weeks</p><figcaption class="result__who">Landscaping Co. owner</figcaption></figure>
+          <figure class="glass result tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">60 new reviews in 3 weeks</p><figcaption class="result__who">Wellness studio owner</figcaption></figure>
+          <figure class="glass result tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">20 → 50 reviews in 1 week</p><figcaption class="result__who">Junk removal owner</figcaption></figure>
+          <figure class="glass result tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">22 → 44 reviews in 1 week</p><figcaption class="result__who">Holistic center owner</figcaption></figure>
+          <figure class="glass result tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">30 → 150 reviews in 2 weeks</p><figcaption class="result__who">Tree service owner</figcaption></figure>
+          <figure class="glass result result--cta tilt" style="margin:0"><div class="quote__stars" data-icon="star" data-repeat="5" role="img" aria-label="5 out of 5 stars"></div><p class="result__stat">Your results here</p><figcaption class="result__who"><a class="link-arrow" href="book-call.html">Book a free growth call <span data-icon="arrow" data-icon-class="arrow"></span></a></figcaption></figure>
         </div>
       </div>
     </section>
 
-    <!-- Final CTA -->
-    <section class="cta" id="contact">
-      <div class="cta__inner" data-reveal>
-        <h2>Ready to Grow Your Business?</h2>
-        <p>The more visible and trusted you are on Google, the more business you get. Let's make it happen.</p>
-        <a class="btn btn--primary btn--lg" href="book-call.html">Book a Free Growth Call</a>
+    <!-- CTA -->
+    <section class="section" id="contact" data-scene='{"x":0,"y":-0.05,"s":0.8,"ry":0,"a":0.3,"spark":1}'>
+      <div class="wrap">
+        <div class="glass glass--lg cta cta--book" data-reveal="scale">
+          <span class="cta__orb"></span>
+          <div class="cta__copy">
+            <span class="eyebrow">Free growth call</span>
+            <h2 class="display">Ready to grow <em>your business?</em></h2>
+            <p class="lead">The more visible and trusted you are on Google, the more business you get. Let's make it happen.</p>
+            <div class="cta-row">
+              <a class="btn btn--primary btn--lg" href="book-call.html" data-magnetic><span data-icon="calendar"></span> Book a free growth call</a>
+            </div>
+          </div>
+          <div class="book3d" id="book3d" role="img" aria-label="3D book cover: The 5-Star Playbook by Review Dominators. Drag to rotate.">
+            <div class="book3d__stage">
+              <div class="book3d__shadow"></div>
+              <div class="book3d__obj">
+                <div class="bk">
+                  <div class="bk__face bk__front">
+                    <div class="cover__mark"><span class="brand__mark" data-logo></span><span><b>Review Dominators</b><small>Home-service growth</small></span></div>
+                    <div class="cover__stars" data-icon="star" data-repeat="5"></div>
+                    <p class="cover__big">THE <span class="hl">5-STAR</span><br>PLAYBOOK</p>
+                    <svg class="cover__crown" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M4.6 23.4 2.8 11l6.9 5.1L16 5.4l6.3 10.7 6.9-5.1-1.8 12.4z"/><rect x="5" y="25.4" width="22" height="3.4" rx="1.5" fill="currentColor"/></svg>
+                    <p class="cover__sub2">More calls. More jobs. More reviews.</p>
+                    <p class="cover__by">DOMINATE LOCAL</p>
+                    <i class="cover__hinge"></i><i class="cover__gloss"></i>
+                  </div>
+                  <div class="bk__face bk__back">
+                    <p class="back__quote">The more visible and trusted you are on Google, the more business you get.</p>
+                    <div class="back__foot"><b>Review Dominators</b><span>reviewdominators.com</span></div>
+                  </div>
+                  <div class="bk__face bk__spine"><span>REVIEW DOMINATORS</span></div>
+                  <div class="bk__face bk__fore"></div>
+                  <div class="bk__face bk__top"></div>
+                  <div class="bk__face bk__bottom"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-footer-full">
-    <div class="site-footer-full__inner">
-      <div class="site-footer-full__brand">
-        <a class="brand" href="#top"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-f" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span></a>
-        <p>Helping service businesses grow using simple systems that actually work.</p>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Services</h4>
-        <a href="services/reputation-management.html">Reputation Management</a>
-        <a href="services/smart-websites.html">Smart Websites</a>
-        <a href="services/google-seo.html">Google SEO</a>
-        <a href="services/google-ads.html">Google Ads</a>
-      </div>
-      <div class="site-footer-full__col">
-        <h4>Company</h4>
-        <a href="#why-us">Why Us</a>
-        <a href="#results">Results</a>
-        <a href="book-call.html">Book a Call</a>
-      </div>
-    </div>
-    <div class="site-footer-full__legal">© <span id="year"></span> Review Dominators. All rights reserved.</div>
-  </footer>
-
-  <script src="main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="js/site.js"></script>
+  <script type="module" src="js/home.js"></script>
+  <script type="module" src="js/rd.js"></script>
 </body>
 </html>
