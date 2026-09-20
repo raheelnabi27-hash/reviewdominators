@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem('rd-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <title>Reputation Management — Review Dominators</title>
   <meta name="description" content="Automated Google review requests that turn happy customers into a steady stream of 5-star reviews. Plans starting at $149/mo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +23,7 @@
 
   <header class="site-header" id="site-header">
     <a class="brand" href="../index.html">
-      <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 36" width="30" height="34"><defs><linearGradient id="rd-logo-h" x1="4" y1="2" x2="28" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e6f2fd"/><stop offset=".45" stop-color="#7db0dd"/><stop offset="1" stop-color="#2c6194"/></linearGradient></defs><path d="M16 1.5 29 6v11.5c0 7.5-5.500 13-13 17C8.500 30.500 3 25 3 17.500V6z" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.55)" stroke-width=".8" stroke-linejoin="round"/><path d="M16 1.5 3 6v11.500C3 25 8.500 30.500 16 34.500z" fill="#fff" fill-opacity=".16"/><polygon class="logo-star" points="16,9.3 17.7,14.15 22.85,14.28 18.76,17.4 20.23,22.33 16,19.4 11.77,22.33 13.24,17.4 9.15,14.28 14.3,14.15" fill="#07101a"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span>
+      <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-h" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-h)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span>
     </a>
 
     <nav class="site-nav" id="site-nav">
@@ -79,7 +81,27 @@
             <a class="btn btn--primary btn--lg" href="#calendar">Book a Call</a>
           </div>
         </div>
-        <div class="svc-hero__art" data-tilt data-tilt-max="6" data-reveal><svg class="icon" aria-hidden="true"><use href="../icons.svg#star"/></svg></div>
+        <div class="mock mock--rep" data-tilt data-tilt-max="5" data-reveal>
+          <div class="mock__search"><svg class="icon" aria-hidden="true"><use href="../icons.svg#search"/></svg><span>plumber near me</span></div>
+          <div class="mock__title"><span>Local map results</span><span class="mock__chip mock__chip--good mock__late"><svg class="icon" aria-hidden="true"><use href="../icons.svg#arrow-up"/></svg>Up 3 spots</span></div>
+          <div class="mock__list">
+            <div class="mrow mrow--you">
+              <span class="mrow__rank" data-count="1" data-from="4" data-prefix="#">#1</span>
+              <div class="mrow__body">
+                <strong>Your Business</strong>
+                <div class="mrow__meta"><span class="stars" aria-hidden="true">★★★★★</span><b data-count="4.9" data-from="3.9" data-decimals="1">4.9</b><span>(<b data-count="214" data-from="38">214</b> reviews)</span></div>
+              </div>
+              <span class="mrow__tag mock__late">Top result</span>
+            </div>
+            <div class="mrow mrow--other"><span class="mrow__rank">#2</span><div class="mrow__body"><strong>Metro Plumbing Co.</strong><div class="mrow__meta"><span class="stars" aria-hidden="true">★★★★★</span><b>4.6</b><span>(132 reviews)</span></div></div></div>
+            <div class="mrow mrow--other"><span class="mrow__rank">#3</span><div class="mrow__body"><strong>AllDay Plumbers</strong><div class="mrow__meta"><span class="stars" aria-hidden="true">★★★★★</span><b>4.4</b><span>(97 reviews)</span></div></div></div>
+            <div class="mrow mrow--other"><span class="mrow__rank">#4</span><div class="mrow__body"><strong>Rapid Rooter</strong><div class="mrow__meta"><span class="stars" aria-hidden="true">★★★★★</span><b>4.2</b><span>(64 reviews)</span></div></div></div>
+          </div>
+          <div class="mock__chart">
+            <div class="mock__title"><span>New reviews per month</span><span class="mock__chip"><svg class="icon" aria-hidden="true"><use href="../icons.svg#trending-up"/></svg>+460%</span></div>
+            <svg class="chart" viewBox="0 0 300 84" aria-hidden="true"><path class="chart__area" d="M0,70 L40,64 L78,60 L116,48 L154,42 L194,28 L232,20 L292,8 L292,84 L0,84 Z"/><path class="chart__line" pathLength="1" d="M0,70 L40,64 L78,60 L116,48 L154,42 L194,28 L232,20 L292,8"/><circle class="chart__dot" cx="292" cy="8" r="4.5"/></svg>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -297,7 +319,7 @@
   <footer class="site-footer-full">
     <div class="site-footer-full__inner">
       <div class="site-footer-full__brand">
-        <a class="brand" href="../index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 36" width="30" height="34"><defs><linearGradient id="rd-logo-f" x1="4" y1="2" x2="28" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e6f2fd"/><stop offset=".45" stop-color="#7db0dd"/><stop offset="1" stop-color="#2c6194"/></linearGradient></defs><path d="M16 1.5 29 6v11.5c0 7.5-5.500 13-13 17C8.500 30.500 3 25 3 17.500V6z" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.55)" stroke-width=".8" stroke-linejoin="round"/><path d="M16 1.5 3 6v11.500C3 25 8.500 30.500 16 34.500z" fill="#fff" fill-opacity=".16"/><polygon class="logo-star" points="16,9.3 17.7,14.15 22.85,14.28 18.76,17.4 20.23,22.33 16,19.4 11.77,22.33 13.24,17.4 9.15,14.28 14.3,14.15" fill="#07101a"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span></a>
+        <a class="brand" href="../index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 34 33" width="34" height="33"><defs><linearGradient id="rd-logo-f" x1="2" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--g1)"/><stop offset=".5" style="stop-color:var(--g2)"/><stop offset="1" style="stop-color:var(--g4)"/></linearGradient></defs><g class="logo-crown"><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500l7.400 12.500 8.400-6.500L31 25.500z" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.5)" stroke-width=".7" stroke-linejoin="round"/><path d="M3 25.500 1.200 9.500l8.400 6.500L17 3.500V25.500z" fill="#fff" fill-opacity=".17"/><circle cx="1.300" cy="8.300" r="1.900" style="fill:var(--c2)"/><circle cx="17" cy="2.600" r="2.200" style="fill:var(--c2)"/><circle cx="32.700" cy="8.300" r="1.900" style="fill:var(--c2)"/></g><rect x="3.500" y="27.300" width="27" height="4.500" rx="1.600" fill="url(#rd-logo-f)" stroke="rgba(255,255,255,.4)" stroke-width=".6"/><polygon class="logo-star" points="17,12.9 18.12,15.96 21.38,16.08 18.81,18.09 19.7,21.22 17,19.4 14.3,21.22 15.19,18.09 12.62,16.08 15.88,15.96" style="fill:var(--on-accent)"/></svg></span><span class="brand__text"><span class="brand__top">Review</span><span class="brand__bottom">Dominators</span></span></a>
         <p>Helping service businesses grow using simple systems that actually work.</p>
       </div>
       <div class="site-footer-full__col">

@@ -126,9 +126,9 @@ if (BOOKING_URL) {
     } else if (url.hostname.endsWith('calendly.com')) {
       url.searchParams.set('embed_domain', location.hostname || 'localhost');
       url.searchParams.set('embed_type', 'Inline');
-      url.searchParams.set('background_color', '0b0a1a');
-      url.searchParams.set('text_color', 'f3f2fb');
-      url.searchParams.set('primary_color', '8b5cf6');
+      url.searchParams.set('background_color', '0c1520');
+      url.searchParams.set('text_color', 'edf3fa');
+      url.searchParams.set('primary_color', '4a80b3');
       url.searchParams.set('hide_gdpr_banner', '1');
     }
     document.querySelectorAll('.calendar-widget').forEach((widget) => {
@@ -298,3 +298,128 @@ if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
     });
   });
 }
+
+// Count-up numbers inside the service mockups
+const countEls = document.querySelectorAll('[data-count]');
+if (countEls.length && 'IntersectionObserver' in window && !reduceMotion) {
+  const runCount = (el) => {
+    const to = parseFloat(el.dataset.count);
+    const from = parseFloat(el.dataset.from || '0');
+    const dec = parseInt(el.dataset.decimals || '0', 10);
+    const pre = el.dataset.prefix || '';
+    const suf = el.dataset.suffix || '';
+    const delay = parseInt(el.dataset.delay || '500', 10);
+    const dur = 1600;
+    el.textContent = `${pre}${from.toFixed(dec)}${suf}`;
+    setTimeout(() => {
+      const t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = `${pre}${(from + (to - from) * eased).toFixed(dec)}${suf}`;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, delay);
+  };
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        runCount(entry.target);
+        countObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  countEls.forEach((el) => countObserver.observe(el));
+}
+
+// Local-rank heat map: starts mostly red/yellow, turns green outward from the centre
+document.querySelectorAll('[data-heatmap]').forEach((map) => {
+  const size = 7;
+  const mid = 3;
+  const tone = (rank) => (rank <= 3 ? 'g' : rank <= 10 ? 'y' : 'r');
+  const cells = [];
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      const dist = Math.hypot(r - mid, c - mid);
+      const noise = (r * 7 + c * 13) % 5;
+      const end = r === mid && c === mid ? 1 : Math.max(1, Math.round(dist * 0.85 + noise * 0.25));
+      const start = Math.round(7 + dist * 3.4 + noise * 2.2);
+      const el = document.createElement('span');
+      const initial = reduceMotion ? end : start;
+      el.className = `hcell ${tone(initial)}`;
+      el.textContent = initial;
+      map.appendChild(el);
+      cells.push({ el, end, dist });
+    }
+  }
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+  const heatObserver = new IntersectionObserver((entries) => {
+    if (!entries[0].isIntersecting) return;
+    heatObserver.disconnect();
+    cells.forEach(({ el, end, dist }) => {
+      setTimeout(() => {
+        el.className = `hcell ${tone(end)} is-flip`;
+        el.textContent = end;
+        setTimeout(() => el.classList.remove('is-flip'), 450);
+      }, 500 + dist * 170);
+    });
+  }, { threshold: 0.4 });
+  heatObserver.observe(map);
+});
+
+// Colour theme picker (each theme = colour 1 + a contrasting colour 2)
+const THEMES = [
+  { id: 'steel', name: 'Steel & Coral', a: '#4a80b3', b: '#ff7a59' },
+  { id: 'emerald', name: 'Emerald & Magenta', a: '#22a06b', b: '#e5489f' },
+  { id: 'violet', name: 'Violet & Lime', a: '#8b5cf6', b: '#a3e635' },
+  { id: 'teal', name: 'Teal & Fuchsia', a: '#12a9bb', b: '#d946ef' },
+  { id: 'crimson', name: 'Crimson & Cyan', a: '#d1364e', b: '#22d3ee' },
+  { id: 'royal', name: 'Royal & Orange', a: '#3b6cf6', b: '#f97316' },
+  { id: 'platinum', name: 'Platinum & Electric', a: '#9aa7b6', b: '#3b82f6' },
+];
+const spriteUse = document.querySelector('use');
+const spritePath = spriteUse ? spriteUse.getAttribute('href').split('#')[0] : 'icons.svg';
+const root = document.documentElement;
+const currentTheme = () => root.getAttribute('data-theme') || 'steel';
+
+const picker = document.createElement('div');
+picker.className = 'theme-picker';
+picker.innerHTML = `
+  <button class="theme-picker__btn" type="button" aria-label="Choose colour theme" aria-expanded="false">
+    <svg class="icon" aria-hidden="true"><use href="${spritePath}#palette"/></svg>
+  </button>
+  <div class="theme-picker__panel">
+    <p class="theme-picker__title">Colour theme</p>
+    ${THEMES.map((t) => `<button class="theme-opt" type="button" data-theme-id="${t.id}"><span class="theme-opt__swatch" style="background:linear-gradient(135deg, ${t.a} 0 50%, ${t.b} 50% 100%)"></span>${t.name}</button>`).join('')}
+  </div>`;
+document.body.appendChild(picker);
+
+const pickerBtn = picker.querySelector('.theme-picker__btn');
+const syncPicker = () => {
+  picker.querySelectorAll('.theme-opt').forEach((opt) => {
+    opt.classList.toggle('is-active', opt.dataset.themeId === currentTheme());
+  });
+};
+const setPickerOpen = (open) => {
+  picker.classList.toggle('is-open', open);
+  pickerBtn.setAttribute('aria-expanded', String(open));
+};
+
+pickerBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  setPickerOpen(!picker.classList.contains('is-open'));
+});
+picker.querySelectorAll('.theme-opt').forEach((opt) => {
+  opt.addEventListener('click', () => {
+    const id = opt.dataset.themeId;
+    if (id === 'steel') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', id);
+    try { localStorage.setItem('rd-theme', id); } catch (err) { /* storage blocked */ }
+    syncPicker();
+  });
+});
+document.addEventListener('click', (e) => {
+  if (!picker.contains(e.target)) setPickerOpen(false);
+});
+syncPicker();
