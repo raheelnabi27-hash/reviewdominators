@@ -47,6 +47,7 @@
 
 
 *, *::before, *::after{ box-sizing: border-box; }
+[hidden]{ display: none !important; }
 html{ scroll-behavior: smooth; }
 body{
   margin: 0;
@@ -183,6 +184,8 @@ main, .site-header, .site-footer-full{ position: relative; z-index: 1; }
 
 /* ============ Buttons ============ */
 .btn{
+  padding: 13px 24px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1145,7 +1148,7 @@ main, .site-header, .site-footer-full{ position: relative; z-index: 1; }
 .portfolio-card__body{ padding: 20px; }
 .portfolio-card h3{ font-size: 16px; font-weight: 700; }
 .portfolio-card p{ font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
-.portfolio-card a{ display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--chrome); }
+.portfolio-card a{ display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; padding: 12px 0; font-size: 13px; font-weight: 700; color: var(--chrome); }
 
 /* ============ Booking calendar widget ============ */
 .calendar-widget{
@@ -1725,4 +1728,98 @@ main, .site-header, .site-footer-full{ position: relative; z-index: 1; }
   .section{ padding: 80px 18px; }
   .stat-grid{ grid-template-columns: 1fr; }
   .cal-slots{ grid-template-columns: 1fr; }
+}
+
+/* ============ Mobile ============ */
+html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body{ -webkit-tap-highlight-color: transparent; }
+.nav-cta, .mobile-cta{ display: none; }
+
+@media (max-width: 980px){
+  .hero__visual{ order: 0; }
+  .hero__ctas .btn, .svc-hero__ctas .btn{ width: 100%; }
+}
+
+@media (max-width: 720px){
+  /* header: compact capsule, booking button lives in the menu */
+  .site-header{ top: 8px; width: calc(100% - 20px); margin-top: 8px; padding: 10px 12px 10px 16px; border-radius: 22px; gap: 10px; backdrop-filter: blur(10px) saturate(150%); -webkit-backdrop-filter: blur(10px) saturate(150%); }
+  .header__actions .btn{ display: none; }
+  .nav-toggle{ width: 44px; height: 44px; border-radius: 14px; }
+  .site-nav{ max-height: calc(100vh - 96px); max-height: calc(100dvh - 96px); overflow-y: auto; padding: 12px; gap: 2px; }
+  .site-nav > a, .nav-item__trigger{ display: flex; align-items: center; min-height: 48px; font-size: 16px; }
+  .site-nav > a::after, .nav-item__trigger::after{ display: none; }
+  .nav-dropdown__item{ padding: 12px 8px; }
+  .site-nav{ background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.03)), rgb(var(--bg2-rgb)); border-color: rgba(255,255,255,.2); box-shadow: inset 0 1px 1px rgba(255,255,255,.4), 0 30px 60px -20px rgba(0,0,0,.9); }
+  .nav-item{ width: 100%; }
+  .nav-item.is-open .nav-dropdown{ transform: none; left: auto; top: auto; }
+  .nav-dropdown{ padding: 2px 0 8px 6px; gap: 2px; border: 0; background: transparent; box-shadow: none; }
+  .nav-cta{ display: inline-flex; margin-top: 8px; min-height: 50px; }
+  .site-nav a.nav-cta:hover{ color: var(--on-accent); }
+
+  /* spacing: no double side margins, tighter vertical rhythm */
+  .section{ padding: 64px 18px; }
+  .section--tint{ padding: 64px 18px; }
+  .section__head{ margin-bottom: 36px; }
+  .section__head p{ font-size: 16px; }
+  .paths, .steps, .stat-grid, .feature-row, .portfolio-grid, .faq, .compare, .pricing, .calendar-widget, .founder-quote,
+  .section--tint > .section__head, .section--tint > .grid, .section--tint > .steps{ padding-left: 0; padding-right: 0; }
+  .hero{ padding-top: 20px; }
+  .hero__inner, .svc-hero__inner{ padding: 20px 18px 48px; gap: 32px; }
+  .svc-hero{ padding-top: 20px; }
+  .hero__title{ font-size: clamp(32px, 9.4vw, 42px); }
+  .svc-hero h1{ font-size: clamp(30px, 8.8vw, 40px); }
+  .hero__sub, .svc-hero__inner > div:first-child > p{ font-size: 16.5px; max-width: none; }
+  .btn--lg{ padding: 16px 24px; }
+  .btn--sm{ min-height: 44px; }
+  .cta{ padding: 72px 18px; }
+  .phone{ width: 248px; }
+  .ticker{ padding: 0 0 32px; }
+
+  /* comfortable tap targets */
+  .brand{ min-height: 44px; }
+  .svc-card__link{ padding: 12px 0; margin-top: 2px; }
+  .site-footer-full{ padding: 44px 18px 104px; }
+  .site-footer-full__col a{ padding: 12px 0; }
+  .faq-item__q{ min-height: 56px; padding: 14px 18px; }
+  .cal-nav{ width: 44px; height: 44px; }
+  .cal-grid{ gap: 4px; }
+  .cal-slot{ padding: 14px 10px; }
+
+  /* forms: 16px stops iOS from zooming in on focus */
+  .calendar-widget__panel{ padding: 18px; }
+  .calendar-widget__form input, .calendar-widget__form textarea{ font-size: 16px; padding: 14px; }
+  .book-hero{ padding: 28px 18px 72px; }
+  .book-hero__inner{ gap: 32px; }
+  .price-card{ padding: 28px 22px; }
+  .price-card--popular{ margin-top: 10px; }
+  .mock{ padding: 14px; border-radius: 22px; }
+  .mock--web{ padding-bottom: 76px; }
+  .mrow{ padding: 0 10px; gap: 10px; }
+  .kpi b{ font-size: 20px; }
+  .compare__table td, .compare__table th{ padding: 10px 8px; font-size: 12.5px; }
+
+  /* lighter on phone GPUs: still background, no endless drifting */
+  .blob{ animation: none; }
+
+  /* floating booking bar (the header button is hidden on phones) */
+  .mobile-cta{
+    display: flex;
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    z-index: 80;
+    min-height: 54px;
+    transform: translateY(160%);
+    transition: transform .45s cubic-bezier(.34,1.56,.64,1);
+  }
+  .mobile-cta.is-visible{ transform: none; }
+}
+
+@media (max-width: 380px){
+  .site-header{ padding-left: 12px; }
+  .brand__bottom{ font-size: 16px; }
+  .phone{ width: 232px; }
+  .hero__inner, .svc-hero__inner{ padding-left: 14px; padding-right: 14px; }
+  .section, .section--tint{ padding-left: 14px; padding-right: 14px; }
 }

@@ -367,3 +367,17 @@ document.querySelectorAll('[data-heatmap]').forEach((map) => {
   }, { threshold: 0.4 });
   heatObserver.observe(map);
 });
+
+// Floating "book a call" bar for phones (the header button is hidden at that size)
+const headerCta = document.querySelector('.header__actions .btn');
+if (headerCta && !/book-call/.test(location.pathname)) {
+  const bar = document.createElement('a');
+  bar.className = 'btn btn--primary mobile-cta';
+  bar.href = headerCta.getAttribute('href');
+  bar.textContent = 'Book a Free Growth Call';
+  document.body.appendChild(bar);
+
+  const toggleBar = () => bar.classList.toggle('is-visible', window.scrollY > 520);
+  window.addEventListener('scroll', toggleBar, { passive: true });
+  toggleBar();
+}
