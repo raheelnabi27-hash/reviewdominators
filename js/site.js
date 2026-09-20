@@ -34,6 +34,9 @@ export const ICONS = {
   compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2z"/>',
   chevD: '<path d="m6 9 6 6 6-6"/>',
   video: '<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10.5 5-3v9l-5-3"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>',
+  moon: '<path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8z"/>',
+  system: '<rect x="3" y="4.5" width="18" height="12.5" rx="2.5"/><path d="M8.5 21h7M12 17v4"/>',
 };
 const starPts = (cx, cy, R, r) => Array.from({ length: 10 }, (_, i) => {
   const a = -Math.PI / 2 + (i * Math.PI) / 5, d = i % 2 ? r : R;
@@ -88,6 +91,14 @@ function buildShell() {
       <a href="${HOME}#results">Results</a>
     </nav>
     <div class="nav__actions">
+      <div class="theme" id="theme">
+        <button class="icon-btn theme__btn" type="button" aria-label="Appearance" aria-haspopup="menu" aria-expanded="false">${icon('sun', 'i-sun')}${icon('moon', 'i-moon')}</button>
+        <div class="theme__menu" role="menu" aria-label="Appearance">
+          <button class="theme__opt" type="button" role="menuitemradio" aria-checked="false" data-theme-pref="light">${icon('sun')}Light${icon('check', 'tick')}</button>
+          <button class="theme__opt" type="button" role="menuitemradio" aria-checked="false" data-theme-pref="dark">${icon('moon')}Dark${icon('check', 'tick')}</button>
+          <button class="theme__opt" type="button" role="menuitemradio" aria-checked="false" data-theme-pref="system">${icon('system')}System${icon('check', 'tick')}</button>
+        </div>
+      </div>
       <a class="btn btn--primary btn--sm" href="${BOOK}" data-magnetic>Book a free call ${icon('arrow', 'arrow')}</a>
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -180,6 +191,35 @@ function bindShell() {
   const prog = $('#progress');
   const setProgress = () => { prog.style.transform = `scaleX(${Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`; };
   addEventListener('scroll', setProgress, { passive: true }); setProgress();
+}
+
+/* ---------- Appearance: light / dark / system (the head script sets data-theme before first paint) ---------- */
+const THEME_KEY = 'rd-theme';
+const systemDark = matchMedia('(prefers-color-scheme: dark)');
+const readPref = () => { try { return localStorage.getItem(THEME_KEY) || 'light'; } catch (e) { return 'light'; } };
+function applyTheme(pref, save) {
+  const dark = pref === 'dark' || (pref === 'system' && systemDark.matches);
+  root.dataset.theme = dark ? 'dark' : 'light';
+  root.dataset.themePref = pref;
+  $('meta[name="theme-color"]')?.setAttribute('content', dark ? '#060f1f' : '#f3f7fc');
+  $$('.theme__opt').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.themePref === pref)));
+  if (save) { try { localStorage.setItem(THEME_KEY, pref); } catch (e) { /* storage blocked */ } }
+  DN.scene?.setTheme();
+}
+function bindTheme() {
+  const box = $('#theme'), btn = $('.theme__btn', box);
+  const setOpen = (open) => { box.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
+  btn.addEventListener('click', () => setOpen(!box.classList.contains('is-open')));
+  box.addEventListener('click', (e) => {
+    const opt = e.target.closest('.theme__opt');
+    if (!opt) return;
+    applyTheme(opt.dataset.themePref, true);
+    setOpen(false);
+  });
+  document.addEventListener('click', (e) => { if (!box.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  systemDark.addEventListener?.('change', () => { if (readPref() === 'system') applyTheme('system', false); });
+  applyTheme(readPref(), false);
 }
 
 /* ---------- Smooth scroll ---------- */
@@ -371,6 +411,7 @@ logoFill();
 $$('.marquee__track').forEach((t) => { t.innerHTML += t.innerHTML; });
 hydrateIcons();
 bindShell();
+bindTheme();
 initScroll();
 initReveals();
 initPointer();
