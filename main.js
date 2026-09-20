@@ -121,14 +121,14 @@ if (BOOKING_URL) {
   try {
     const url = new URL(BOOKING_URL);
     if (url.hostname.endsWith('cal.com')) {
-      url.searchParams.set('theme', 'dark');
+      url.searchParams.set('theme', 'light');
       url.searchParams.set('layout', 'month_view');
     } else if (url.hostname.endsWith('calendly.com')) {
       url.searchParams.set('embed_domain', location.hostname || 'localhost');
       url.searchParams.set('embed_type', 'Inline');
-      url.searchParams.set('background_color', '0c1520');
-      url.searchParams.set('text_color', 'edf3fa');
-      url.searchParams.set('primary_color', '4a80b3');
+      url.searchParams.set('background_color', 'ffffff');
+      url.searchParams.set('text_color', '0d1116');
+      url.searchParams.set('primary_color', '0a0c0f');
       url.searchParams.set('hide_gdpr_banner', '1');
     }
     document.querySelectorAll('.calendar-widget').forEach((widget) => {
