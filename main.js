@@ -381,3 +381,102 @@ if (headerCta && !/book-call/.test(location.pathname)) {
   window.addEventListener('scroll', toggleBar, { passive: true });
   toggleBar();
 }
+
+// 3D on touch screens (no mouse): scroll-driven tilt, finger tilt, and device-motion tilt on the hero phone
+if (!reduceMotion && window.matchMedia('(hover: none)').matches && tiltEls.length) {
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const visible = new Set();
+  const held = new Set();
+  const gyro = { rx: 0, ry: 0 };
+  let frame = 0;
+
+  const apply = (el, rx, ry, mx, my) => {
+    el.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(4px)`;
+    el.style.setProperty('--mx', `${mx.toFixed(1)}%`);
+    el.style.setProperty('--my', `${my.toFixed(1)}%`);
+  };
+
+  const render = () => {
+    frame = 0;
+    const vh = window.innerHeight;
+    visible.forEach((el) => {
+      if (held.has(el)) return;
+      const max = parseFloat(el.dataset.tiltMax) || 8;
+      const r = el.getBoundingClientRect();
+      const p = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+      let rx = -p * max * 1.5;
+      let ry = Math.sin(p * 2.4) * max * 0.9;
+      if (el.id === 'phone-tilt') {
+        rx += gyro.rx;
+        ry += gyro.ry;
+      }
+      apply(el, rx, ry, 50 + ry * 3, 50 + p * 35);
+    });
+  };
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(render);
+  };
+
+  const io3d = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        visible.add(entry.target);
+        entry.target.classList.add('is-3d');
+      } else {
+        visible.delete(entry.target);
+        entry.target.classList.remove('is-3d');
+        entry.target.style.transform = '';
+      }
+    });
+    schedule();
+  }, { rootMargin: '15% 0px' });
+  tiltEls.forEach((el) => io3d.observe(el));
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+
+  // hold and drag a finger over a card to tilt it
+  tiltEls.forEach((el) => {
+    const max = parseFloat(el.dataset.tiltMax) || 8;
+    const move = (e) => {
+      const t = e.touches[0];
+      const r = el.getBoundingClientRect();
+      const px = clamp((t.clientX - r.left) / r.width, 0, 1) - 0.5;
+      const py = clamp((t.clientY - r.top) / r.height, 0, 1) - 0.5;
+      apply(el, -py * max * 2.4, px * max * 2.4, (px + 0.5) * 100, (py + 0.5) * 100);
+    };
+    el.addEventListener('touchstart', (e) => {
+      held.add(el);
+      move(e);
+    }, { passive: true });
+    el.addEventListener('touchmove', move, { passive: true });
+    const release = () => {
+      held.delete(el);
+      schedule();
+    };
+    el.addEventListener('touchend', release);
+    el.addEventListener('touchcancel', release);
+  });
+
+  // the hero phone follows the phone's own tilt (Android: automatic, iOS: asks once on first tap)
+  const phoneEl = document.getElementById('phone-tilt');
+  if (phoneEl && 'DeviceOrientationEvent' in window) {
+    let base = null;
+    const onOrient = (e) => {
+      if (e.beta == null || e.gamma == null) return;
+      if (!base) base = { b: e.beta, g: e.gamma };
+      gyro.ry = clamp((e.gamma - base.g) * 0.4, -12, 12);
+      gyro.rx = clamp(-(e.beta - base.b) * 0.3, -10, 10);
+      schedule();
+    };
+    const enableMotion = () => window.addEventListener('deviceorientation', onOrient, { passive: true });
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      phoneEl.addEventListener('touchend', () => {
+        DeviceOrientationEvent.requestPermission()
+          .then((state) => { if (state === 'granted') enableMotion(); })
+          .catch(() => {});
+      }, { once: true });
+    } else {
+      enableMotion();
+    }
+  }
+}
