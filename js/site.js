@@ -9,6 +9,27 @@ const BASE = document.body.dataset.base || '';   // '../' on pages inside /servi
 
 root.classList.add('ready');
 
+/* ---------- Hardware check ----------
+   With GPU acceleration off (or a software renderer) Chrome does WebGL, blur and compositing on the CPU, which is far too slow for
+   the 3D star and frosted glass. Detect that up front and serve a light version from the first frame. ?gpu=off previews it,
+   ?quality=high forces the full version anyway. */
+const params = new URLSearchParams(location.search);
+function hasGpu() {
+  try {
+    const c = document.createElement('canvas');
+    const opts = { failIfMajorPerformanceCaveat: true };
+    const gl = c.getContext('webgl2', opts) || c.getContext('webgl', opts);
+    if (!gl) return false;
+    const ext = gl.getExtension('WEBGL_debug_renderer_info');
+    const name = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : '';
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    return !/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(name);
+  } catch (e) { return false; }
+}
+const readQuality = () => { try { return params.get('quality') || localStorage.getItem('rd-quality'); } catch (e) { return params.get('quality'); } };
+const SOFT = (params.get('gpu') === 'off' || !hasGpu()) && readQuality() !== 'high';
+if (SOFT) root.classList.add('lite', 'no-gpu', 'no-webgl');
+
 /* ---------- Icons (24px stroke set; use <i data-icon="name">) ---------- */
 export const ICONS = {
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
@@ -225,7 +246,8 @@ function bindTheme() {
 
 /* ---------- Smooth scroll ---------- */
 function initScroll() {
-  if (reduce || !window.Lenis) return;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  if (reduce || SOFT || !window.Lenis) return;
   const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
   DN.lenis = lenis;
   if (window.gsap && window.ScrollTrigger) {
@@ -366,7 +388,7 @@ function initPointer() {
 /* ---------- 3D scene ---------- */
 async function initScene() {
   const canvas = $('#scene');
-  if (!canvas) return;
+  if (!canvas || SOFT) return;
   try {
     const probe = document.createElement('canvas');
     if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) throw new Error('WebGL unavailable');
@@ -393,9 +415,10 @@ async function initScene() {
 
 /* ---------- Adaptive quality: only kicks in if a device measurably can't hold ~40fps ---------- */
 function initQuality() {
-  const q = new URLSearchParams(location.search).get('quality');
+  const q = params.get('quality');
   try { if (q === 'high' || q === 'lite') localStorage.setItem('rd-quality', q); } catch (e) { /* storage blocked */ }
-  let pref = q; try { pref = pref || localStorage.getItem('rd-quality'); } catch (e) { /* ignore */ }
+  const pref = readQuality();
+  if (SOFT) return;
   const goLite = () => { root.classList.add('lite'); DN.scene?.lite(); };
   if (pref === 'lite') { goLite(); return; }
   if (pref === 'high' || reduce) return;

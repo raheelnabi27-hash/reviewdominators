@@ -32,6 +32,7 @@ py serve.py 4301
 - Booking: paste a Cal.com or Calendly link into `BOOKING_URL` in [js/rd.js](js/rd.js). While it is empty the pages show the front-end demo calendar, which sends nothing anywhere.
 - Header/footer links live in [js/site.js](js/site.js) (`SERVICES` and `buildShell`).
 - Quality: `?quality=high` forces full effects, `?quality=lite` forces the lighter mode. Slow devices switch to lite automatically.
+- No GPU: browsers with hardware acceleration off (software rendering) are detected on load and get a CPU-friendly version (no 3D scene, no blur, native scrolling, a CSS star instead). Preview it with `?gpu=off`.
 
 ## Deploy
 
