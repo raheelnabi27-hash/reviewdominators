@@ -14,18 +14,28 @@ root.classList.add('ready');
    the 3D star and frosted glass. Detect that up front and serve a light version from the first frame. ?gpu=off previews it,
    ?quality=high forces the full version anyway. */
 const params = new URLSearchParams(location.search);
-function hasGpu() {
+const SOFTWARE_GPU = /swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i;
+function probeGpu() {
+  const info = { ok: false, reason: 'no-webgl', renderer: '' };
   try {
-    const c = document.createElement('canvas');
-    const opts = { failIfMajorPerformanceCaveat: true };
-    const gl = c.getContext('webgl2', opts) || c.getContext('webgl', opts);
-    if (!gl) return false;
+    // The "major performance caveat" flag is only a hint (it can misfire on integrated GPUs), so when it trips we look closer
+    // at the renderer's name instead of trusting it alone.
+    let gl = null, flagged = false;
+    const strict = { failIfMajorPerformanceCaveat: true };
+    const c1 = document.createElement('canvas');
+    gl = c1.getContext('webgl2', strict) || c1.getContext('webgl', strict);
+    if (!gl) { flagged = true; const c2 = document.createElement('canvas'); gl = c2.getContext('webgl2') || c2.getContext('webgl'); }
+    if (!gl) return info;
     const ext = gl.getExtension('WEBGL_debug_renderer_info');
-    const name = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : '';
+    info.renderer = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : '';
     gl.getExtension('WEBGL_lose_context')?.loseContext();
-    return !/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(name);
-  } catch (e) { return false; }
+    if (SOFTWARE_GPU.test(info.renderer)) { info.reason = 'software-renderer'; return info; }
+    if (flagged && !info.renderer) { info.reason = 'caveat-and-unknown-renderer'; return info; }
+    info.ok = true; info.reason = flagged ? 'ok (caveat flag ignored)' : 'ok';
+    return info;
+  } catch (e) { info.reason = `error: ${e.message}`; return info; }
 }
+const GPU = probeGpu();
 // ?quality=high applies to that page view only. It is never saved, and a leftover saved 'high' from an earlier version is cleared,
 // so the hardware check below always gets the final say. ?quality=lite is remembered (it can only make the site lighter).
 const readQuality = () => {
@@ -37,7 +47,9 @@ const readQuality = () => {
     return saved;
   } catch (e) { return null; }
 };
-const SOFT = (params.get('gpu') === 'off' || !hasGpu()) && readQuality() !== 'high';
+const FORCED_SOFT = params.get('gpu') === 'off';
+const SOFT = (FORCED_SOFT || !GPU.ok) && readQuality() !== 'high';
+window.__rd = { gpu: GPU, soft: SOFT, forcedSoft: FORCED_SOFT };
 if (SOFT) root.classList.add('lite', 'no-gpu', 'no-webgl');
 
 /* ---------- Icons (24px stroke set; use <i data-icon="name">) ---------- */
@@ -408,6 +420,8 @@ async function initScene() {
     if (root.classList.contains('lite')) DN.scene.lite();
   } catch (err) {
     console.warn('3D scene disabled:', err);
+    DN.sceneError = String((err && err.message) || err);
+    window.__rd.sceneError = DN.sceneError;
     root.classList.add('no-webgl');
     return;
   }
@@ -451,14 +465,21 @@ function initQuality() {
 
 /* ?perf=1 shows a live frames-per-second meter (handy for checking a device) */
 function initPerfMeter() {
-  if (!new URLSearchParams(location.search).has('perf')) return;
+  if (!params.has('perf') && !params.has('debug')) return;
   const el = document.createElement('div');
-  el.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;padding:4px 8px;border-radius:8px;font:600 12px/1.3 monospace;color:#fff;background:rgba(0,0,0,.72);pointer-events:none';
+  el.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;max-width:min(92vw,520px);padding:6px 9px;border-radius:8px;font:600 11px/1.45 monospace;color:#fff;background:rgba(0,0,0,.78);pointer-events:none;white-space:pre-wrap;word-break:break-word';
   document.body.appendChild(el);
   let n = 0, t0 = performance.now();
   const tick = (now) => {
     n++;
-    if (now - t0 >= 1000) { el.textContent = `${n} fps${root.classList.contains('lite') ? ' · lite' : ''}`; n = 0; t0 = now; }
+    if (now - t0 >= 1000) {
+      const mode = SOFT ? 'LIGHT (no-GPU)' : root.classList.contains('lite') ? 'LITE' : 'FULL';
+      el.textContent = `${n} fps · ${mode} · 3D ${DN.scene ? 'on' : 'off'}
+GPU check: ${GPU.reason}
+renderer: ${GPU.renderer || 'unknown'}${DN.sceneError ? `
+3D error: ${DN.sceneError}` : ''}`;
+      n = 0; t0 = now;
+    }
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);

@@ -25,26 +25,43 @@ const BOOKING_URL = '';
 
 if (BOOKING_URL) {
   try {
-    const url = new URL(BOOKING_URL);
-    if (url.hostname.endsWith('cal.com')) {
-      url.searchParams.set('theme', 'light');
-      url.searchParams.set('layout', 'month_view');
-    } else if (url.hostname.endsWith('calendly.com')) {
-      url.searchParams.set('embed_domain', location.hostname || 'localhost');
-      url.searchParams.set('embed_type', 'Inline');
-      url.searchParams.set('background_color', 'ffffff');
-      url.searchParams.set('text_color', '0b2240');
-      url.searchParams.set('primary_color', '0e6fdb');
-      url.searchParams.set('hide_gdpr_banner', '1');
-    }
+    const base = new URL(BOOKING_URL);
+    const isCal = base.hostname.endsWith('cal.com');
+    const themeNow = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+    const embedUrl = () => {
+      const url = new URL(base);
+      if (isCal) {
+        url.searchParams.set('theme', themeNow());
+        url.searchParams.set('layout', 'month_view');
+        url.searchParams.set('embed', 'true');
+      } else if (url.hostname.endsWith('calendly.com')) {
+        const dark = themeNow() === 'dark';
+        url.searchParams.set('embed_domain', location.hostname || 'localhost');
+        url.searchParams.set('embed_type', 'Inline');
+        url.searchParams.set('background_color', dark ? '10233f' : 'ffffff');
+        url.searchParams.set('text_color', dark ? 'e8f1ff' : '0b2240');
+        url.searchParams.set('primary_color', '0e6fdb');
+        url.searchParams.set('hide_gdpr_banner', '1');
+      }
+      return url.toString();
+    };
+    const frames = [];
     $$('.calendar-widget').forEach((widget) => {
       const frame = document.createElement('iframe');
-      frame.src = url.toString();
+      frame.src = embedUrl();
       frame.title = 'Book a call';
       frame.loading = 'lazy';
+      frame.allow = 'payment';
       widget.classList.add('calendar-widget--embed');
-      widget.replaceChildren(frame);
+      const note = document.createElement('p');
+      note.className = 'calendar-widget__alt';
+      note.innerHTML = `Calendar not loading? <a href="${base.toString()}" target="_blank" rel="noopener">Open it in a new tab</a>.`;
+      widget.replaceChildren(frame, note);
+      frames.push(frame);
     });
+    // keep the embedded calendar in step with the site's light / dark choice
+    new MutationObserver(() => frames.forEach((f) => { const next = embedUrl(); if (f.src !== next) f.src = next; }))
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   } catch (err) {
     console.warn('BOOKING_URL is not a valid URL, showing demo calendar instead.', err);
   }
