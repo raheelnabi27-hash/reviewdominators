@@ -26,7 +26,17 @@ function hasGpu() {
     return !/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(name);
   } catch (e) { return false; }
 }
-const readQuality = () => { try { return params.get('quality') || localStorage.getItem('rd-quality'); } catch (e) { return params.get('quality'); } };
+// ?quality=high applies to that page view only. It is never saved, and a leftover saved 'high' from an earlier version is cleared,
+// so the hardware check below always gets the final say. ?quality=lite is remembered (it can only make the site lighter).
+const readQuality = () => {
+  const q = params.get('quality');
+  if (q) return q;
+  try {
+    const saved = localStorage.getItem('rd-quality');
+    if (saved === 'high') { localStorage.removeItem('rd-quality'); return null; }
+    return saved;
+  } catch (e) { return null; }
+};
 const SOFT = (params.get('gpu') === 'off' || !hasGpu()) && readQuality() !== 'high';
 if (SOFT) root.classList.add('lite', 'no-gpu', 'no-webgl');
 
@@ -416,7 +426,7 @@ async function initScene() {
 /* ---------- Adaptive quality: only kicks in if a device measurably can't hold ~40fps ---------- */
 function initQuality() {
   const q = params.get('quality');
-  try { if (q === 'high' || q === 'lite') localStorage.setItem('rd-quality', q); } catch (e) { /* storage blocked */ }
+  try { if (q === 'lite') localStorage.setItem('rd-quality', q); } catch (e) { /* storage blocked */ }
   const pref = readQuality();
   if (SOFT) return;
   const goLite = () => { root.classList.add('lite'); DN.scene?.lite(); };
