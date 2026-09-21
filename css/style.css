@@ -813,11 +813,11 @@ html:not(.ready) .loader { animation: loaderOut 0.4s 4s forwards; }
 .calendar-widget__confirm h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.03em; }
 .calendar-widget__confirm p { color: var(--muted); }
 .calendar-widget--embed { display: block; }
-.calendar-widget--embed iframe { display: block; width: 100%; height: 760px; border: 0; border-radius: var(--r-lg); background: var(--surface); box-shadow: inset 0 0 0 1px var(--glass-line), 0 30px 70px -30px var(--shadow); }
+.calendar-widget--embed iframe { display: block; width: 100%; height: 600px; border: 0; border-radius: var(--r-lg); background: var(--surface); box-shadow: inset 0 0 0 1px var(--glass-line), 0 30px 70px -30px var(--shadow); }
 .book-hero { padding: calc(var(--nav-h) + clamp(40px, 7vw, 90px)) 0 clamp(60px, 8vw, 110px); position: relative; }
-.book-hero__inner { width: min(var(--maxw), calc(100% - var(--gutter) * 2)); margin-inline: auto; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.book-hero__inner { width: min(1360px, calc(100% - var(--gutter) * 2)); margin-inline: auto; display: grid; grid-template-columns: 0.62fr 1.38fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .book-hero__copy { display: grid; gap: 1.3rem; justify-items: start; }
-.book-hero__copy h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.04; font-size: clamp(2.4rem, 4.6vw, 4rem); }
+.book-hero__copy h1 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.04; font-size: clamp(2.2rem, 3.6vw, 3.4rem); }
 .book-hero__copy > p { color: var(--muted); font-size: 1.08rem; max-width: 48ch; }
 .book-hero__features { display: grid; gap: 1.1rem; margin-top: 0.4rem; }
 .book-hero__feature { display: flex; gap: 0.9rem; align-items: flex-start; }
@@ -1067,4 +1067,3 @@ html.no-gpu .btn--primary::after { display: none; }
 
 .calendar-widget__alt { margin-top: 0.8rem; text-align: center; font-size: 0.85rem; color: var(--muted); }
 .calendar-widget__alt a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-@media (max-width: 620px) { .calendar-widget--embed iframe { height: 840px; } }

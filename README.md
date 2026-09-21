@@ -29,7 +29,7 @@ py serve.py 4301
 
 - Colours: the `:root` palette block at the top of [css/style.css](css/style.css). The 3D scene picks them up automatically.
 - Fonts: Plus Jakarta Sans (headings) and Inter (body) via Google Fonts.
-- Booking: paste a Cal.com or Calendly link into `BOOKING_URL` in [js/rd.js](js/rd.js). While it is empty the pages show the front-end demo calendar, which sends nothing anywhere.
+- Booking: paste a Cal.com or Calendly link into `BOOKING_URL` in [js/rd.js](js/rd.js). It is set to the Cal.com 30-minute link; if it is emptied the pages fall back to a front-end demo calendar that sends nothing anywhere.
 - Header/footer links live in [js/site.js](js/site.js) (`SERVICES` and `buildShell`).
 - Quality: `?quality=high` forces full effects for that page view only, `?quality=lite` forces the lighter mode (and is remembered). Slow devices switch to lite automatically.
 - No GPU: browsers with hardware acceleration off (software rendering) are detected on load and get a CPU-friendly version (no 3D scene, no blur, native scrolling, a CSS star instead). Preview it with `?gpu=off`.

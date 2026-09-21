@@ -21,7 +21,7 @@ $$('.faq-item__q').forEach((btn) => {
 /* ---------- Booking ---------- */
 // Paste your Cal.com or Calendly booking link here (e.g. 'https://cal.com/yourname/30min').
 // While empty, the pages show the front-end demo calendar below, which sends nothing anywhere.
-const BOOKING_URL = '';
+const BOOKING_URL = 'https://cal.com/raheel-lvf5dc/30min';
 
 if (BOOKING_URL) {
   try {
@@ -58,6 +58,8 @@ if (BOOKING_URL) {
       note.innerHTML = `Calendar not loading? <a href="${base.toString()}" target="_blank" rel="noopener">Open it in a new tab</a>.`;
       widget.replaceChildren(frame, note);
       frames.push(frame);
+      // Cal.com switches to a stacked layout when its frame is narrow, which needs more height
+      if ('ResizeObserver' in window) new ResizeObserver(([e]) => { frame.style.height = e.contentRect.width >= 800 ? '600px' : '900px'; }).observe(frame);
     });
     // keep the embedded calendar in step with the site's light / dark choice
     new MutationObserver(() => frames.forEach((f) => { const next = embedUrl(); if (f.src !== next) f.src = next; }))
